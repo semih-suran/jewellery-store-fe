@@ -48,7 +48,7 @@ const Earrings = () => {
             <Item
               key={index}
               price={item.votes}
-              imageUrl={item.article_img_url} // Display only the article image
+              imageUrl={item.article_img_url}
               title={item.title}
               onClick={() => alert(`Clicked on ${item.title}`)}
             />
