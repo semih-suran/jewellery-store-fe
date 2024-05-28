@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Navbar = () => {
   return (
@@ -10,17 +10,42 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="./Home" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-              <a href="./EarRings" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Ear Rings</a>
-              <a href="./Rings" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Rings</a>
-              <a href="./Necklaces" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Necklaces</a>
-              <a href="./Bracelets" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Bracelets</a>
+              <a
+                href="./"
+                className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Home
+              </a>
+              <a
+                href="./"
+                className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Ear Rings
+              </a>
+              <a
+                href="./"
+                className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Rings
+              </a>
+              <a
+                href="./"
+                className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Necklaces
+              </a>
+              <a
+                href="./"
+                className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Bracelets
+              </a>
             </div>
           </div>
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
