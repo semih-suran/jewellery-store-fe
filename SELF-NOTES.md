@@ -8,3 +8,12 @@ Hot Deals -page
 
 New Arrivals -page
 
+---
+
+manual deploy on netlify :
+
+- npm run build
+- netlify deploy
+- netlify deploy --prod
+
+---
