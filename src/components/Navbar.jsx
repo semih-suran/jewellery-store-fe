@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -41,7 +40,7 @@ const Navbar = () => {
                 to="/earrings"
                 className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
-                Ear Rings
+                Earrings
               </Link>
               <Link
                 to="/rings"
