@@ -82,12 +82,13 @@ const Navbar = () => {
               Menu
             </button>
           </div>
-          <div>
-            {user ? (
-              <div>
+          <div className="flex items-center">
+            {user && (
+              <div className="flex items-center">
                 <span className="text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
-                  Welcome, {user.name}
+                  {user.name}
                 </span>
+                <img src={user.picture} alt="user avatar" class="w-12 h-12 rounded-full overflow-hidden mr-2" />
                 <button
                   onClick={logout}
                   className="bg-red-500 text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -95,7 +96,8 @@ const Navbar = () => {
                   Logout
                 </button>
               </div>
-            ) : (
+            )}
+            {!user && (
               <GoogleLogin
                 onSuccess={login}
                 onError={() => {
