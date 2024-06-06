@@ -29,9 +29,6 @@ export const formatPrice = (price) => {
   return `£${formattedPrice}`;
 };
 
-export const handleBagButtonClick = () => {
-  alert("Shopping Bag is still under development!");
-};
 export const handleItemButtonClick = () => {
   alert("This item is still under development!");
 };
