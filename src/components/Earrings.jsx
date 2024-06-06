@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Item from "./Item";
 import Arrow from "./Arrow";
-import { fetchArticlesByTopic } from "../services/api";
+import { fetchArticlesByTopic, formatPrice } from "../services/api";
 
 const Earrings = () => {
   const [items, setItems] = useState([]);
@@ -46,10 +46,9 @@ const Earrings = () => {
           {items.map((item, index) => (
             <Item
               key={index}
-              price={item.votes}
+              price={formatPrice(item.votes)}
               imageUrl={item.article_img_url}
               title={item.title}
-              onClick={() => alert(`Clicked on ${item.title}`)}
             />
           ))}
         </div>
