@@ -1,24 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "./AuthProvider.jsx";
 
 const Navbar = () => {
+  const { user, login, logout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
-
+  const handleLogout = async () => {
+    const logoutResponse = await googleLogout();
+    if (!logoutResponse) {
+      logout();
+    } else {
+      console.error("Logout failed");
+    }
+  };
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-  };
-
-  const login = (credentialResponse) => {
-    const decoded = jwtDecode(credentialResponse.credential);
-    setUser(decoded);
-  };
-
-  const logout = () => {
-    googleLogout();
-    setUser(null);
   };
 
   return (
@@ -61,10 +58,10 @@ const Navbar = () => {
                 Bracelets
               </Link>
               <Link
-                to="/favorites"
+                to="/favourites"
                 className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
-                Favorites
+                Favourites
               </Link>
               <Link
                 to="/shopping-cart"
@@ -83,26 +80,27 @@ const Navbar = () => {
             </button>
           </div>
           <div className="flex items-center">
-            {user && (
+            {user ? (
               <div className="flex items-center">
                 <span className="text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
                   {user.name}
                 </span>
-                <img src={user.picture} alt="user avatar" class="w-12 h-12 rounded-full overflow-hidden mr-2" />
+                <img
+                  src={user.picture}
+                  alt="user avatar"
+                  className="w-12 h-12 rounded-full overflow-hidden mr-2"
+                />
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="bg-red-500 text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Logout
                 </button>
               </div>
-            )}
-            {!user && (
+            ) : (
               <GoogleLogin
                 onSuccess={login}
-                onError={() => {
-                  console.log("Login Failed");
-                }}
+                onError={() => console.log("Login Failed")}
               />
             )}
           </div>
@@ -120,7 +118,7 @@ const Navbar = () => {
             to="/earrings"
             className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
           >
-            Ear Rings
+            Earrings
           </Link>
           <Link
             to="/rings"
@@ -141,10 +139,10 @@ const Navbar = () => {
             Bracelets
           </Link>
           <Link
-            to="/favorites"
+            to="/Favourites"
             className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
           >
-            Favorites
+            Favourites
           </Link>
           <Link
             to="/shopping-cart"
