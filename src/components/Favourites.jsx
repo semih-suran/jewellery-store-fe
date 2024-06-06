@@ -1,12 +1,12 @@
 import React from "react";
 
-function Favorites() {
+function Favourites() {
   return (
     <div>
-      <h1>Your Favorites</h1>
-      {/* Add content for the favorites page */}
+      <h1>Your Favourites</h1>
+      {/* Add content for the Favourites page */}
     </div>
   );
 }
 
-export default Favorites;
+export default Favourites;
