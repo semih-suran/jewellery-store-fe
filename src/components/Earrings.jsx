@@ -1,4 +1,3 @@
-// src/components/Earrings.js
 import React, { useState, useEffect, useRef } from "react";
 import Item from "./Item";
 import Arrow from "./Arrow";
