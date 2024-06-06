@@ -9,12 +9,14 @@ import Bracelets from "./components/Bracelets.jsx";
 import Rings from "./components/Rings.jsx";
 import Necklaces from "./components/Necklaces.jsx";
 import ShoppingBag from "./components/ShoppingBag.jsx";
+import { ShoppingBagProvider } from "./components/ShoppingBagContext.jsx";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Navbar />
+        <ShoppingBagProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/earrings" element={<Earrings />} />
@@ -24,6 +26,7 @@ function App() {
           <Route path="/favourites" element={<Favourites />} />
           <Route path="/shopping-bag" element={<ShoppingBag />} />
         </Routes>
+        </ShoppingBagProvider>
       </Router>
     </AuthProvider>
   );
