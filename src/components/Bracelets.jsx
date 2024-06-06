@@ -1,23 +1,59 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Item from "./Item";
+import Arrow from "./Arrow";
+import { fetchAllArticles, formatPrice } from "../services/api";
 
 const Bracelets = () => {
+  const [items, setItems] = useState([]);
+  const scrollContainerRef = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const articles = await fetchAllArticles();
+        setItems(articles || []);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        setItems([]);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const scroll = (direction) => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, clientWidth } = scrollContainerRef.current;
+      const scrollTo =
+        direction === "left"
+          ? scrollLeft - clientWidth
+          : scrollLeft + clientWidth;
+      scrollContainerRef.current.scrollTo({
+        left: scrollTo,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <div className="bg-white p-4 shadow-md rounded-lg">
+    <div className="relative bg-white p-4 shadow-md rounded-lg">
       <h2 className="text-2xl font-semibold mb-4">Bracelets</h2>
-      <div className="flex space-x-4 overflow-x-auto scrollbar-hide">
-        {/* Sample items */}
-        <div className="min-w-[200px] bg-gray-200 p-4 rounded-lg flex-shrink-0">
-          Item 1
+      <div className="relative">
+        <Arrow direction="left" onClick={() => scroll("left")} />
+        <div
+          ref={scrollContainerRef}
+          className="flex space-x-4 overflow-x-auto scrollbar-hide"
+        >
+          {items.map((item, index) => (
+            <Item
+              key={index}
+              price={formatPrice(item.votes)}
+              imageUrl={item.article_img_url}
+              title={item.title}
+              onClick={() => alert(`Clicked on ${item.title}`)}
+            />
+          ))}
         </div>
-        <div className="min-w-[200px] bg-gray-200 p-4 rounded-lg flex-shrink-0">
-          Item 2
-        </div>
-        <div className="min-w-[200px] bg-gray-200 p-4 rounded-lg flex-shrink-0">
-          Item 3
-        </div>
-        <div className="min-w-[200px] bg-gray-200 p-4 rounded-lg flex-shrink-0">
-          Item 4
-        </div>
+        <Arrow direction="right" onClick={() => scroll("right")} />
       </div>
     </div>
   );

@@ -1,8 +1,7 @@
-// src/components/Rings.js
 import React, { useState, useEffect, useRef } from "react";
 import Item from "./Item";
 import Arrow from "./Arrow";
-import { fetchArticlesByTopic } from "../services/api";
+import { fetchArticlesByTopic, formatPrice } from "../services/api";
 
 const Rings = () => {
   const [items, setItems] = useState([]);
@@ -47,6 +46,7 @@ const Rings = () => {
           {items.map((item, index) => (
             <Item
               key={index}
+              price={formatPrice(item.votes)}
               imageUrl={item.article_img_url}
               title={item.title}
               onClick={() => alert(`Clicked on ${item.title}`)}
