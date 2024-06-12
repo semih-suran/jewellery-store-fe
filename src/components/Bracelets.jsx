@@ -35,26 +35,26 @@ const Bracelets = () => {
   };
 
   return (
-    <div className="relative bg-white p-4 shadow-md rounded-lg">
-      <h2 className="text-2xl font-semibold mb-4">Bracelets</h2>
-      <div className="relative">
-        <Arrow direction="left" onClick={() => scroll("left")} />
-        <div
-          ref={scrollContainerRef}
-          className="flex space-x-4 overflow-x-auto scrollbar-hide"
-        >
-          {items.map((item, index) => (
-            <Item
-              key={index}
-              price={formatPrice(item.votes)}
-              imageUrl={item.article_img_url}
-              title={item.title}
-              onClick={() => alert(`Clicked on ${item.title}`)}
-            />
-          ))}
+    <div className="relative bg-white p-4 shadow-md rounded-lg pt-32">
+        <h2 className="text-2xl font-semibold mb-4">Bracelets</h2>
+        <div className="relative">
+          <Arrow direction="left" onClick={() => scroll("left")} />
+          <div
+            ref={scrollContainerRef}
+            className="flex space-x-4 overflow-x-auto scrollbar-hide"
+          >
+            {items.map((item, index) => (
+              <Item
+                key={index}
+                price={formatPrice(item.votes)}
+                imageUrl={item.article_img_url}
+                title={item.title}
+                onClick={() => alert(`Clicked on ${item.title}`)}
+              />
+            ))}
+          </div>
+          <Arrow direction="right" onClick={() => scroll("right")} />
         </div>
-        <Arrow direction="right" onClick={() => scroll("right")} />
-      </div>
     </div>
   );
 };

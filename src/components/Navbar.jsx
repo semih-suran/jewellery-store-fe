@@ -1,17 +1,31 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { AuthContext } from "./AuthProvider.jsx";
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, login, logout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleLogout = async () => {
@@ -27,49 +41,56 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   const renderMenuItems = (className) => (
     <div className={className}>
       <Link
+        to="/all-products"
+        className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+        onClick={closeMenu}
+      >
+        All Products
+      </Link>
+      <Link
         to="/earrings"
         className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+        onClick={closeMenu}
       >
         Earrings
       </Link>
       <Link
         to="/rings"
         className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+        onClick={closeMenu}
       >
         Rings
       </Link>
       <Link
         to="/necklaces"
         className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+        onClick={closeMenu}
       >
         Necklaces
       </Link>
       <Link
         to="/bracelets"
         className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+        onClick={closeMenu}
       >
         Bracelets
-      </Link>
-      <Link
-        to="/favourites"
-        className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-      >
-        Favourites
-      </Link>
-      <Link
-        to="/shopping-bag"
-        className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-      >
-        Shopping Bag
       </Link>
     </div>
   );
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md fixed top-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col">
           <div className="flex items-center justify-between h-16">
@@ -78,34 +99,61 @@ const Navbar = () => {
                 <Link to="/">Jewellery Store</Link>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center space-x-4">
+              <>
+                <Link
+                  to="/favourites"
+                  className="text-gray-700 hover:text-gray-900"
+                >
+                  <FaHeart className="w-6 h-6" />
+                </Link>
+                <Link
+                  to="/shopping-bag"
+                  className="text-gray-700 hover:text-gray-900"
+                >
+                  <FaShoppingCart className="w-6 h-6" />
+                </Link>
+              </>
+
               {user ? (
-                <div className="flex items-center">
-                  <span className="text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
-                    {user.name}
-                  </span>
+                <div className="relative" ref={dropdownRef}>
                   <img
                     src={user.picture}
                     alt="user avatar"
-                    className="w-12 h-12 rounded-full overflow-hidden mr-2"
+                    className="w-12 h-12 rounded-full cursor-pointer"
+                    onClick={toggleDropdown}
                   />
-                  <button
-                    onClick={handleLogout}
-                    className="bg-red-500 text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    Logout
-                  </button>
+                  {dropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg py-1">
+                      <Link
+                        to="/my-account"
+                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      >
+                        My Account
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <GoogleLogin
                   onSuccess={login}
                   onError={() => console.log("Login Failed")}
+                  useOneTap
+                  theme="outline"
+                  shape="circle"
+                  size="small"
                 />
               )}
             </div>
           </div>
           <div className="flex flex-col items-start justify-start">
-            {windowWidth > 680 ? (
+            {windowWidth > 600 ? (
               renderMenuItems("flex ml-4 space-x-4")
             ) : (
               <>

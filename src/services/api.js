@@ -32,3 +32,22 @@ export const formatPrice = (price) => {
 export const handleItemButtonClick = () => {
   alert("This item is still under development!");
 };
+
+export const addToFavoritesAPI = async (item, userId) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/favorites`, { item, userId });
+    return response.data;
+  } catch (error) {
+    console.error("Error adding to favorites:", error);
+  }
+};
+
+export const removeFromFavoritesAPI = async (itemId, userId) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/favorites`, { data: { itemId, userId } });
+    return response.data;
+  } catch (error) {
+    console.error("Error removing from favorites:", error);
+  }
+};
+
