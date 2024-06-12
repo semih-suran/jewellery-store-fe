@@ -13,7 +13,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-gray-100 flex flex-col pt-24">
       <main className="flex-grow space-y-8">
         <h1 className="text-4xl font-bold text-center py-8 pb-0">
           Jewellery Store

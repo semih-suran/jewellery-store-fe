@@ -14,7 +14,7 @@ function ShoppingBag() {
     .toFixed(2);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 p-8">
+    <div className="flex flex-col min-h-screen bg-gray-100 p-8 pt-32">
       <div className="flex flex-col items-center justify-center h-full">
         <h1 className="text-3xl font-bold text-gray-800">Shopping Bag</h1>
         {bagItems.length === 0 ? (

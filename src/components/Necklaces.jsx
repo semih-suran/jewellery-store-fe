@@ -35,7 +35,7 @@ const Necklaces = () => {
   };
 
   return (
-    <div className="relative bg-white p-4 shadow-md rounded-lg">
+    <div className="relative bg-white p-4 shadow-md rounded-lg pt-32">
       <h2 className="text-2xl font-semibold mb-4">Necklaces</h2>
       <div className="relative">
         <Arrow direction="left" onClick={() => scroll("left")} />

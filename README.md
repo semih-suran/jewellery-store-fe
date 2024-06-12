@@ -4,6 +4,10 @@ Welcome to the Jewellery Store project!
 
 This project is a work-in-progress e-commerce website for a jewellery store. It aims to provide users with a seamless shopping experience for purchasing earrings, rings, necklaces, and bracelets.
 
+## Figma Design
+
+Check out the Figma Design of the Jewellery Store: [Inspired Figma Design](https://www.figma.com/design/PpBfz90d9X1OUZZ8be5LDA/Jewellery-Website-Templates-(Community)-(Copy)?node-id=0-1&t=C2leuenngH8VD16M-1)
+
 ## Live Demo
 
 Check out the live demo of the Jewellery Store: [Jewellery Store Live Demo](https://jewellery-store-semih.netlify.app/)
