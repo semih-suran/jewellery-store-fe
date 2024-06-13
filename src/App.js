@@ -1,39 +1,122 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
-import HomePage from "./components/HomePage.jsx";
+import HomePage from "./components/HomePage";
 import Favourites from "./components/Favourites";
-import AuthProvider from "./components/AuthProvider.jsx";
-import Earrings from "./components/Earrings.jsx";
-import Bracelets from "./components/Bracelets.jsx";
-import Rings from "./components/Rings.jsx";
-import Necklaces from "./components/Necklaces.jsx";
-import ShoppingBag from "./components/ShoppingBag.jsx";
-import AllProducts from "./components/AllProducts.jsx";
-import MyAccount from "./components/MyAccount.jsx";
-import { ShoppingBagProvider } from "./components/ShoppingBagContext.jsx";
+import AuthProvider from "./components/AuthProvider";
+import EarringsRaw from "./components/EarringsRaw";
+import BraceletsRaw from "./components/BraceletsRaw";
+import RingsRaw from "./components/RingsRaw";
+import NecklacesRaw from "./components/NecklacesRaw";
+import ShoppingBag from "./components/ShoppingBag";
+import AllProducts from "./components/AllProducts";
+import MyAccount from "./components/MyAccount";
+import { ShoppingBagProvider } from "./components/ShoppingBagContext";
+import AnimatedPage from "./services/api";
+import FavouritesProvider from "./components/FavouritesContext";
 
-function App() {
+const App = () => {
   return (
     <AuthProvider>
-      <ShoppingBagProvider>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/earrings" element={<Earrings />} />
-            <Route path="/rings" element={<Rings />} />
-            <Route path="/necklaces" element={<Necklaces />} />
-            <Route path="/bracelets" element={<Bracelets />} />
-            <Route path="/favourites" element={<Favourites />} />
-            <Route path="/shopping-bag" element={<ShoppingBag />} />
-            <Route path="/all-products" element={<AllProducts />} />
-            <Route path="/my-account" element={<MyAccount />} />
-          </Routes>
-        </Router>
-      </ShoppingBagProvider>
+      <FavouritesProvider>
+        <ShoppingBagProvider>
+          <Router>
+            <Navbar />
+            <AppRoutes />
+          </Router>
+        </ShoppingBagProvider>
+      </FavouritesProvider>
     </AuthProvider>
   );
-}
+};
+
+const AppRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence wait>
+      <Routes location={location} key={location.pathname}>
+        <Route
+          path="/"
+          element={
+            <AnimatedPage>
+              <HomePage />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/earrings"
+          element={
+            <AnimatedPage>
+              <EarringsRaw />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/rings"
+          element={
+            <AnimatedPage>
+              <RingsRaw />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/necklaces"
+          element={
+            <AnimatedPage>
+              <NecklacesRaw />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/bracelets"
+          element={
+            <AnimatedPage>
+              <BraceletsRaw />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/favourites"
+          element={
+            <AnimatedPage>
+              <Favourites />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/shopping-bag"
+          element={
+            <AnimatedPage>
+              <ShoppingBag />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/all-products"
+          element={
+            <AnimatedPage>
+              <AllProducts />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/my-account"
+          element={
+            <AnimatedPage>
+              <MyAccount />
+            </AnimatedPage>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 export default App;

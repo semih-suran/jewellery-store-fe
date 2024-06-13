@@ -35,13 +35,13 @@ const Earrings = () => {
   };
 
   return (
-    <div className="relative bg-white p-4 shadow-md rounded-lg pt-32">
+    <div className="relative bg-gray-100 p-4 shadow-md rounded-lg">
       <h2 className="text-2xl font-semibold mb-4">Earrings</h2>
       <div className="relative">
         <Arrow direction="left" onClick={() => scroll("left")} />
         <div
           ref={scrollContainerRef}
-          className="flex space-x-4 overflow-x-auto scrollbar-hide"
+          className="flex space-x-4 overflow-x-auto scrollbar-hide pb-1"
         >
           {items.map((item, index) => (
             <Item
