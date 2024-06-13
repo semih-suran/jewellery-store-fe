@@ -6,7 +6,7 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 ## Figma Design
 
-Check out the Figma Design of the Jewellery Store: [Inspired Figma Design](https://www.figma.com/design/PpBfz90d9X1OUZZ8be5LDA/Jewellery-Website-Templates-(Community)-(Copy)?node-id=0-1&t=C2leuenngH8VD16M-1)
+Check out the Figma Design of the Jewellery Store: [Link will be updated!](https://jewellery-store-semih.netlify.app/)
 
 ## Live Demo
 
