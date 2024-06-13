@@ -8,9 +8,13 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 Check out the Figma Design of the Jewellery Store: [Link will be updated!](https://jewellery-store-semih.netlify.app/)
 
-## Live Demo
+## Live Page on Netlify
 
-Check out the live demo of the Jewellery Store: [Jewellery Store Live Demo](https://jewellery-store-semih.netlify.app/)
+Check out the live demo of the Jewellery Store: [Jewellery Store Live Page](https://jewellery-store-semih.netlify.app/)
+
+## Backend on Render
+
+Check out the Endpoints of the Jewellery Store: [Jewellery Store Endpoints](https://jewellery-store-be.onrender.com/api)
 
 ## Tech Stack
 
