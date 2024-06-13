@@ -10,7 +10,7 @@ const BraceletsRaw = () => {
     const fetchData = async () => {
       try {
         const articles = await fetchAllArticles();
-        setItems(articles || []);
+        setItems(articles.items || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setItems([]);
@@ -22,7 +22,9 @@ const BraceletsRaw = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-24">
       <main className="flex-grow space-y-8">
-        <h1 className="text-4xl font-bold text-center py-8 pb-0">Bracelets</h1>
+        <h1 className="text-4xl font-bold text-center py-8 pb-0">
+          Bracelets
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {" "}
         </div>
@@ -30,10 +32,10 @@ const BraceletsRaw = () => {
           {items.map((item, index) => (
             <Item
               key={index}
-              price={formatPrice(item.votes)}
-              imageUrl={item.article_img_url}
-              title={item.title}
-              onClick={() => alert(`Clicked on ${item.title}`)}
+              price={formatPrice(item.price)}
+              imageUrl={item.images[0]}
+              title={item.name}
+              onClick={() => alert(`Clicked on ${item.description}`)}
             />
           ))}
         </div>

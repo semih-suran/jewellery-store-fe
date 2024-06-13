@@ -4,14 +4,14 @@ import Arrow from "./Arrow";
 import { fetchAllArticles, formatPrice } from "../services/api";
 
 const Bracelets = () => {
-  const [items, setItems] = useState([]);
   const scrollContainerRef = useRef(null);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const articles = await fetchAllArticles();
-        setItems(articles || []);
+        setItems(articles.items || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setItems([]);
@@ -43,15 +43,15 @@ const Bracelets = () => {
             ref={scrollContainerRef}
             className="flex space-x-4 overflow-x-auto scrollbar-hide pb-1"
           >
-            {items.map((item, index) => (
-              <Item
-                key={index}
-                price={formatPrice(item.votes)}
-                imageUrl={item.article_img_url}
-                title={item.title}
-                onClick={() => alert(`Clicked on ${item.title}`)}
-              />
-            ))}
+          {items.map((item, index) => (
+            <Item
+              key={index}
+              price={formatPrice(item.price)}
+              imageUrl={item.images[0]}
+              title={item.name}
+              onClick={() => alert(`Clicked on ${item.description}`)}
+            />
+          ))}
           </div>
           <Arrow direction="right" onClick={() => scroll("right")} />
         </div>
