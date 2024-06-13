@@ -2,10 +2,14 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { AuthContext } from "./AuthProvider.jsx";
+import { FavouritesContext } from "./FavouritesContext.jsx";
+import { ShoppingBagContext } from "./ShoppingBagContext.jsx";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, login, logout } = useContext(AuthContext);
+  const { favourites } = useContext(FavouritesContext);
+  const { bagItems } = useContext(ShoppingBagContext);
   const [isOpen, setIsOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -103,15 +107,25 @@ const Navbar = () => {
               <>
                 <Link
                   to="/favourites"
-                  className="text-gray-700 hover:text-gray-900"
+                  className="text-gray-700 hover:text-gray-900 relative"
                 >
                   <FaHeart className="w-6 h-6" />
+                  {favourites.length > 0 && (
+                    <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                      {favourites.length}
+                    </span>
+                  )}
                 </Link>
                 <Link
                   to="/shopping-bag"
-                  className="text-gray-700 hover:text-gray-900"
+                  className="text-gray-700 hover:text-gray-900 relative"
                 >
                   <FaShoppingCart className="w-6 h-6" />
+                  {bagItems.length > 0 && (
+                    <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                      {bagItems.length}
+                    </span>
+                  )}
                 </Link>
               </>
 

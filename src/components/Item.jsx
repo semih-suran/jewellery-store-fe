@@ -37,7 +37,7 @@ const Item = ({ title, imageUrl, price }) => {
   }, [isAdded]);
 
   return (
-    <div className="min-w-[330px] sm:min-w-[150px] md:min-w-[200px] bg-gray-200 p-4 rounded-lg flex-shrink-0">
+    <div className="min-w-[330px] sm:min-w-[150px] md:min-w-[200px] bg-white p-4 rounded-lg shadow-md flex-shrink-0">
       <img
         src={imageUrl}
         alt={title}

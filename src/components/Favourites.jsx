@@ -81,7 +81,7 @@ function Favourites() {
           to="/"
           className="mt-4 py-2 px-4 rounded-md bg-blue-500 text-white hover:bg-blue-700 focus:outline-none"
         >
-          Home Page
+          Continue Shopping
         </Link>
       </div>
     </div>

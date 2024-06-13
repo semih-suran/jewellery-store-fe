@@ -16,7 +16,7 @@ const Footer = () => {
           </li>
           <li>
             <Link
-              to="https://wa.me/00447766112591"
+              to="https://wa.me/+447766112591"
               className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Contact Us

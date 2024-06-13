@@ -4,12 +4,11 @@ import SearchBar from "./SearchBar";
 import Footer from "./Footer";
 import { fetchAllArticles, formatPrice } from "../services/api";
 
-const AllProducts = () => {
+const BraceletsRaw = () => {
   const handleSearch = (query) => {
     // Implement search functionality here
     console.log("Searching for:", query);
   };
-
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -28,9 +27,7 @@ const AllProducts = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-24">
       <main className="flex-grow space-y-8">
-        <h1 className="text-4xl font-bold text-center py-8 pb-0">
-          All Products
-        </h1>
+        <h1 className="text-4xl font-bold text-center py-8 pb-0">Bracelets</h1>
         <SearchBar onSearch={handleSearch} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {" "}
@@ -52,4 +49,4 @@ const AllProducts = () => {
   );
 };
 
-export default AllProducts;
+export default BraceletsRaw;

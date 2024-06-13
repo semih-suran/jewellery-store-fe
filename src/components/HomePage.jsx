@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "./Footer";
-import EarRings from "./Earrings";
+import Earrings from "./Earrings";
 import Rings from "./Rings";
 import Necklaces from "./Necklaces";
 import Bracelets from "./Bracelets";
@@ -19,7 +19,7 @@ const HomePage = () => {
           Jewellery Store
         </h1>
         <SearchBar onSearch={handleSearch} />
-        <EarRings />
+        <Earrings />
         <Rings />
         <Necklaces />
         <Bracelets />
