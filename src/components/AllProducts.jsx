@@ -10,7 +10,7 @@ const AllProducts = () => {
     const fetchData = async () => {
       try {
         const articles = await fetchAllArticles();
-        setItems(articles || []);
+        setItems(articles.items || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setItems([]);
@@ -32,10 +32,10 @@ const AllProducts = () => {
           {items.map((item, index) => (
             <Item
               key={index}
-              price={formatPrice(item.votes)}
-              imageUrl={item.article_img_url}
-              title={item.title}
-              onClick={() => alert(`Clicked on ${item.title}`)}
+              price={formatPrice(item.price)}
+              imageUrl={item.images[0]}
+              title={item.name}
+              onClick={() => alert(`Clicked on ${item.description}`)}
             />
           ))}
         </div>
