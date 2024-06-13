@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Item from "./Item";
-import SearchBar from "./SearchBar";
 import Footer from "./Footer";
 import { fetchArticlesByTopic, formatPrice } from "../services/api";
 
 const EarringsRaw = () => {
-  const handleSearch = (query) => {
-    // Implement search functionality here
-    console.log("Searching for:", query);
-  };
+
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -30,7 +26,6 @@ const EarringsRaw = () => {
         <h1 className="text-4xl font-bold text-center py-8 pb-0">
           Earrings
         </h1>
-        <SearchBar onSearch={handleSearch} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {" "}
         </div>

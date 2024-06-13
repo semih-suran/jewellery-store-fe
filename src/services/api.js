@@ -26,27 +26,29 @@ export const fetchArticlesByTopic = async (topic) => {
   }
 };
 
-// Add these new functions to fetch counts
-export const fetchFavoritesCount = async (userId) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/favorites/count`, { params: { userId } });
-    return response.data.count; // Assuming API returns { count: number }
-  } catch (error) {
-    console.error("Error fetching favorites count:", error);
-    return 0;
-  }
-};
+// ** Waiting for Backend to be developed **
 
-export const fetchShoppingBagCount = async (userId) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/shopping-bag/count`, { params: { userId } });
-    return response.data.count; // Assuming API returns { count: number }
-  } catch (error) {
-    console.error("Error fetching shopping bag count:", error);
-    return 0;
-  }
-};
+// export const fetchFavoritesCount = async (userId) => {
+//   try {
+//     const response = await axios.get(`${BASE_URL}/favorites/count`, { params: { userId } });
+//     return response.data.count; // Assuming API returns { count: number }
+//   } catch (error) {
+//     console.error("Error fetching favorites count:", error);
+//     return 0;
+//   }
+// };
 
+// export const fetchShoppingBagCount = async (userId) => {
+//   try {
+//     const response = await axios.get(`${BASE_URL}/shopping-bag/count`, { params: { userId } });
+//     return response.data.count; // Assuming API returns { count: number }
+//   } catch (error) {
+//     console.error("Error fetching shopping bag count:", error);
+//     return 0;
+//   }
+// };
+
+// ** Waiting for Backend to be developed **
 
 export const formatPrice = (price) => {
   const formattedPrice = price.toFixed(2);

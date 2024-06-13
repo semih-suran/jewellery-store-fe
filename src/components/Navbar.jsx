@@ -5,6 +5,7 @@ import { AuthContext } from "./AuthProvider.jsx";
 import { FavouritesContext } from "./FavouritesContext.jsx";
 import { ShoppingBagContext } from "./ShoppingBagContext.jsx";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import SearchBar from "./SearchBar.jsx";
 
 const Navbar = () => {
   const { user, login, logout } = useContext(AuthContext);
@@ -39,6 +40,11 @@ const Navbar = () => {
     } else {
       console.error("Logout failed");
     }
+  };
+
+  const handleSearch = (query) => {
+    // Implement search functionality here
+    console.log("Searching for:", query);
   };
 
   const toggleMenu = () => {
@@ -103,6 +109,7 @@ const Navbar = () => {
                 <Link to="/">Jewellery Store</Link>
               </div>
             </div>
+            <SearchBar onSearch={handleSearch} />
             <div className="flex items-center space-x-4">
               <>
                 <Link
