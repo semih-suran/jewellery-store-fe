@@ -43,7 +43,7 @@ Check out the Endpoints of the Jewellery Store: [Jewellery Store Endpoints](http
 To get started with this project, follow these steps:
 
 1. Clone the repository:
-   git clone https://github.com/your-username/jewellery-store.git
+   git clone https://github.com/[your-username]/jewellery-store.git
 
 2. Install dependencies:
    cd jewellery-store
