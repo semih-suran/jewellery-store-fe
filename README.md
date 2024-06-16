@@ -43,14 +43,16 @@ Check out the Endpoints of the Jewellery Store: [Jewellery Store Endpoints](http
 To get started with this project, follow these steps:
 
 1. Clone the repository:
-   git clone https://github.com/[your-username]/jewellery-store.git
+   git clone https://github.com/......your-user-name....../jewellery-store.git
 
-2. Install dependencies:
-   cd jewellery-store
-   npm install
+2. Install dependencies and set your .env files:
+
+   - cd jewellery-store
+   - npm install
+   - create .env files
 
 3. Start the development server:
-   npm start
+   - npm start
 
 4. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the app.
 
