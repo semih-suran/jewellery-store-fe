@@ -21,8 +21,8 @@ const AllProducts = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col pt-32 p-8">
-      <main className="flex-grow flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-gray-100 flex flex-col pt-32">
+      <main className="flex-grow flex flex-col items-center p-8">
         <h1 className="text-3xl font-bold text-gray-800">All Products</h1>
         {items.length === 0 ? (
           <p>No products available...</p>
@@ -36,7 +36,6 @@ const AllProducts = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="bg-white p-4 rounded-lg shadow-md"
                 >
                   <Item
                     price={formatPrice(item.price)}

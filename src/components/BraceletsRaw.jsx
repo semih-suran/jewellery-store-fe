@@ -21,9 +21,9 @@ const BraceletsRaw = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col pt-32 p-8">
-      <main className="flex-grow flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold text-gray-800">Bracelets</h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col pt-32">
+      <main className="flex-grow space-y-8 p-8">
+        <h1 className="text-3xl font-bold text-center text-gray-800">Bracelets</h1>
         <p className="text-s font-bold text-center py-0 pb-0">*under development*</p>
         <p className="text-s font-bold text-center py-0 pb-0">Listing all items for now...</p>
         {items.length === 0 ? (
