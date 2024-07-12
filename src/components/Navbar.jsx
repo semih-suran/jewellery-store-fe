@@ -102,82 +102,83 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md fixed top-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <div className="text-2xl font-bold ml-4">
-                <Link to="/">Jewellery Store</Link>
-              </div>
-            </div>
-            <SearchBar onSearch={handleSearch} />
-            <div className="flex items-center space-x-4">
-              <>
-                <Link
-                  to="/favourites"
-                  className="text-gray-700 hover:text-gray-900 relative"
-                >
-                  <FaHeart className="w-6 h-6" />
-                  {favourites.length > 0 && (
-                    <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                      {favourites.length}
-                    </span>
-                  )}
-                </Link>
-                <Link
-                  to="/shopping-bag"
-                  className="text-gray-700 hover:text-gray-900 relative"
-                >
-                  <FaShoppingCart className="w-6 h-6" />
-                  {bagItems.length > 0 && (
-                    <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                      {bagItems.length}
-                    </span>
-                  )}
-                </Link>
-              </>
-
-              {user ? (
-                <div className="relative" ref={dropdownRef}>
-                  <img
-                    src={user.picture}
-                    alt="user avatar"
-                    className="w-12 h-12 rounded-full cursor-pointer"
-                    onClick={toggleDropdown}
-                  />
-                  {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg py-1">
-                      <Link
-                        to="/my-account"
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        onClick={toggleDropdown}
-                      >
-                        My Account
-                      </Link>
-                      <button
-                        onClick={() => {
-                          handleLogout();
-                          toggleDropdown();
-                        }}
-                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <GoogleLogin
-                  onSuccess={login}
-                  onError={() => console.log("Login Failed")}
-                  useOneTap
-                  theme="outline"
-                  shape="circle"
-                  size="small"
-                />
-              )}
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <div className="text-2xl font-bold ml-4">
+              <Link to="/">Jewellery Store</Link>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-start">
+
+          <div className="flex items-center space-x-4">
+            <>
+              <Link
+                to="/favourites"
+                className="text-gray-700 hover:text-gray-900 relative"
+              >
+                <FaHeart className="w-6 h-6" />
+                {favourites.length > 0 && (
+                  <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                    {favourites.length}
+                  </span>
+                )}
+              </Link>
+              <Link
+                to="/shopping-bag"
+                className="text-gray-700 hover:text-gray-900 relative"
+              >
+                <FaShoppingCart className="w-6 h-6" />
+                {bagItems.length > 0 && (
+                  <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                    {bagItems.length}
+                  </span>
+                )}
+              </Link>
+            </>
+
+            {user ? (
+              <div className="relative" ref={dropdownRef}>
+                <img
+                  src={user.picture}
+                  alt="user avatar"
+                  className="w-12 h-12 rounded-full cursor-pointer"
+                  onClick={toggleDropdown}
+                />
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg py-1">
+                    <Link
+                      to="/my-account"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={toggleDropdown}
+                    >
+                      My Account
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        toggleDropdown();
+                      }}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <GoogleLogin
+                onSuccess={login}
+                onError={() => console.log("Login Failed")}
+                useOneTap
+                theme="outline"
+                shape="circle"
+                size="small"
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex flex-col items-start">
             {windowWidth > 600 ? (
               renderMenuItems("flex ml-4 space-x-4")
             ) : (
@@ -205,6 +206,10 @@ const Navbar = () => {
                 )}
               </>
             )}
+          </div>
+
+          <div className="flex-grow flex justify-end">
+            <SearchBar onSearch={handleSearch} />
           </div>
         </div>
       </div>
