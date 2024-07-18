@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Item from "./Item";
 import Footer from "./Footer";
-import { fetchAllArticles, formatPrice } from "../services/api";
+import { fetchAllItems } from "../services/api";
 import { motion, AnimatePresence } from "framer-motion";
 
 const AllProducts = () => {
@@ -10,8 +10,8 @@ const AllProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const articles = await fetchAllArticles();
-        setItems(articles.items || []);
+        const items = await fetchAllItems();
+        setItems(items || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setItems([]);
@@ -19,7 +19,6 @@ const AllProducts = () => {
     };
     fetchData();
   }, []);
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-32">
       <main className="flex-grow flex flex-col items-center p-8">
@@ -38,8 +37,8 @@ const AllProducts = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <Item
-                    price={formatPrice(item.price)}
-                    imageUrl={item.images[0]}
+                    price={item.price}
+                    imageUrl={item.images_url[0]}
                     title={item.name}
                     onClick={() => alert(`Clicked on ${item.description}`)}
                   />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Item from "./Item";
 import Arrow from "./Arrow";
-import { fetchAllArticles, formatPrice } from "../services/api";
+import { fetchBracelets } from "../services/api";
 
 const Bracelets = () => {
   const scrollContainerRef = useRef(null);
@@ -10,8 +10,8 @@ const Bracelets = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const articles = await fetchAllArticles();
-        setItems(articles.items || []);
+        const bracelets = await fetchBracelets();
+        setItems(bracelets || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setItems([]);
@@ -45,11 +45,11 @@ const Bracelets = () => {
           >
           {items.map((item, index) => (
             <Item
-              key={index}
-              price={formatPrice(item.price)}
-              imageUrl={item.images[0]}
-              title={item.name}
-              onClick={() => alert(`Clicked on ${item.description}`)}
+            key={index}
+            price={item.price}
+            imageUrl={item.images_url}
+            title={item.name}
+            onClick={() => alert(`Clicked on ${item.description}`)}
             />
           ))}
           </div>

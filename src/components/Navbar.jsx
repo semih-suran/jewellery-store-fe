@@ -6,6 +6,7 @@ import { FavouritesContext } from "./FavouritesContext.jsx";
 import { ShoppingBagContext } from "./ShoppingBagContext.jsx";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import SearchBar from "./SearchBar.jsx";
+import { fetchSearchResults } from "../services/api";
 
 const Navbar = () => {
   const { user, login, logout } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -42,9 +44,10 @@ const Navbar = () => {
     }
   };
 
-  const handleSearch = (query) => {
-    // Implement search functionality here
+  const handleSearch = async (query) => {
     console.log("Searching for:", query);
+    const results = await fetchSearchResults(query);
+    setSearchResults(results);
   };
 
   const toggleMenu = () => {
@@ -110,30 +113,28 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <>
-              <Link
-                to="/favourites"
-                className="text-gray-700 hover:text-gray-900 relative"
-              >
-                <FaHeart className="w-6 h-6" />
-                {favourites.length > 0 && (
-                  <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                    {favourites.length}
-                  </span>
-                )}
-              </Link>
-              <Link
-                to="/shopping-bag"
-                className="text-gray-700 hover:text-gray-900 relative"
-              >
-                <FaShoppingCart className="w-6 h-6" />
-                {bagItems.length > 0 && (
-                  <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                    {bagItems.length}
-                  </span>
-                )}
-              </Link>
-            </>
+            <Link
+              to="/favourites"
+              className="text-gray-700 hover:text-gray-900 relative"
+            >
+              <FaHeart className="w-6 h-6" />
+              {favourites.length > 0 && (
+                <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                  {favourites.length}
+                </span>
+              )}
+            </Link>
+            <Link
+              to="/shopping-bag"
+              className="text-gray-700 hover:text-gray-900 relative"
+            >
+              <FaShoppingCart className="w-6 h-6" />
+              {bagItems.length > 0 && (
+                <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                  {bagItems.length}
+                </span>
+              )}
+            </Link>
 
             {user ? (
               <div className="relative" ref={dropdownRef}>
@@ -212,6 +213,29 @@ const Navbar = () => {
             <SearchBar onSearch={handleSearch} />
           </div>
         </div>
+        {searchResults.length > 0 && (
+          <div className="bg-white shadow-lg rounded-lg mt-4 p-4">
+            <h2 className="text-xl font-semibold mb-2">Search Results</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {searchResults.map((result) => (
+                <div
+                  key={result.id}
+                  className="border rounded-lg p-4 hover:shadow-md"
+                >
+                  <Link to={`/item/${result.id}`}>
+                    <img
+                      src={result.image}
+                      alt={result.name}
+                      className="w-full h-32 object-cover rounded-t-lg"
+                    />
+                    <h3 className="text-lg font-medium mt-2">{result.name}</h3>
+                    <p className="text-gray-600 mt-1">{result.description}</p>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
