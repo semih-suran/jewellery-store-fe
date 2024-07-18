@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Item from "./Item";
 import Arrow from "./Arrow";
-import { fetchArticlesByTopic, formatPrice } from "../services/api";
+import { fetchEarrings } from "../services/api";
 
 const Earrings = () => {
   const [items, setItems] = useState([]);
@@ -10,10 +10,10 @@ const Earrings = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const articles = await fetchArticlesByTopic("cooking");
-        setItems(articles || []);
+        const earrings = await fetchEarrings();
+        setItems(earrings || []);
       } catch (error) {
-        console.error("Error fetching articles:", error);
+        console.error("Error fetching earrings:", error);
         setItems([]);
       }
     };
@@ -45,10 +45,11 @@ const Earrings = () => {
         >
           {items.map((item, index) => (
             <Item
-              key={index}
-              price={formatPrice(item.votes)}
-              imageUrl={item.article_img_url}
-              title={item.title}
+            key={index}
+            price={item.price}
+            imageUrl={item.images_url}
+            title={item.name}
+            onClick={() => alert(`Clicked on ${item.description}`)}
             />
           ))}
         </div>

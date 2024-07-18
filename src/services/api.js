@@ -2,71 +2,70 @@ import axios from "axios";
 import React from "react";
 import { motion } from "framer-motion";
 
-const BASE_URL = "https://jewellery-store-be.onrender.com/api";
+const BASE_URL = "https://thenews-lhhv.onrender.com/api";
 
-export const fetchAllArticles = async () => {
+export const fetchAllItems = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/items`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching all articles:", error);
+    console.error("Error fetching all items:", error);
     return [];
   }
 };
 
-export const fetchArticlesByTopic = async (topic) => {
+export const fetchBracelets = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/articles`, {
-      params: { topic },
+    const response = await axios.get(`${BASE_URL}/items/type/bracelet`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all bracelets:", error);
+    return [];
+  }
+};
+
+export const fetchEarrings = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/items/type/earring`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all earrings:", error);
+    return [];
+  }
+};
+
+export const fetchRings = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/items/type/ring`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all rings:", error);
+    return [];
+  }
+};
+
+export const fetchNecklaces = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/items/type/necklace`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all necklaces:", error);
+    return [];
+  }
+};
+
+export const fetchSearchResults = async (query) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/items`, {
+      params: { query },
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching articles:", error);
+    console.error("Error fetching search results:", error);
     return [];
   }
 };
 
-// ** Waiting for Backend to be developed **
-
-// export const fetchFavoritesCount = async (userId) => {
-//   try {
-//     const response = await axios.get(`${BASE_URL}/favorites/count`, { params: { userId } });
-//     return response.data.count; // Assuming API returns { count: number }
-//   } catch (error) {
-//     console.error("Error fetching favorites count:", error);
-//     return 0;
-//   }
-// };
-
-// export const fetchShoppingBagCount = async (userId) => {
-//   try {
-//     const response = await axios.get(`${BASE_URL}/shopping-bag/count`, { params: { userId } });
-//     return response.data.count; // Assuming API returns { count: number }
-//   } catch (error) {
-//     console.error("Error fetching shopping bag count:", error);
-//     return 0;
-//   }
-// };
-
-// export const addToFavoritesAPI = async (item, userId) => {
-//   try {
-//     const response = await axios.post(`${BASE_URL}/favorites`, { item, userId });
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error adding to favorites:", error);
-//   }
-// };
-
-// export const removeFromFavoritesAPI = async (itemId, userId) => {
-//   try {
-//     const response = await axios.delete(`${BASE_URL}/favorites`, { data: { itemId, userId } });
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error removing from favorites:", error);
-//   }
-// };
-
-// ** Waiting for Backend to be developed **
 
 export const formatPrice = (price) => {
   const formattedPrice = price.toFixed(2);

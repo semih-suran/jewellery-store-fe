@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Item from "./Item";
 import Footer from "./Footer";
-import { fetchArticlesByTopic, formatPrice } from "../services/api";
+import { fetchNecklaces } from "../services/api";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NecklacesRaw = () => {
@@ -10,10 +10,10 @@ const NecklacesRaw = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const articles = await fetchArticlesByTopic("coding");
-        setItems(articles || []);
+        const necklaces = await fetchNecklaces();
+        setItems(necklaces || []);
       } catch (error) {
-        console.error("Error fetching articles:", error);
+        console.error("Error fetching necklaces:", error);
         setItems([]);
       }
     };
@@ -24,8 +24,6 @@ const NecklacesRaw = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col pt-32">
       <main className="flex-grow space-y-8 p-8">
         <h1 className="text-3xl font-bold text-center text-gray-800">Necklaces</h1>
-        <p className="text-s font-bold text-center py-0 pb-0">*under development*</p>
-        <p className="text-s font-bold text-center py-0 pb-0">Listing an irrelevant database for now...</p>
         {items.length === 0 ? (
           <p>No products available...</p>
         ) : (
@@ -40,9 +38,9 @@ const NecklacesRaw = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <Item
-                    price={formatPrice(item.votes)}
-                    imageUrl={item.article_img_url}
-                    title={item.title}
+                    price={item.price}
+                    imageUrl={item.images_url}
+                    title={item.name}
                     onClick={() => alert(`Clicked on ${item.title}`)}
                   />
                 </motion.div>
