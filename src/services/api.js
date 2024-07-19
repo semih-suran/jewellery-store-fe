@@ -54,6 +54,16 @@ export const fetchNecklaces = async () => {
   }
 };
 
+export const fetchProductById = async (productId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/items/${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching product by ID ${productId}:`, error);
+    return null;
+  }
+};
+
 export const fetchSearchResults = async (query) => {
   try {
     const response = await axios.get(`${BASE_URL}/items`, {
@@ -66,12 +76,6 @@ export const fetchSearchResults = async (query) => {
   }
 };
 
-
-export const formatPrice = (price) => {
-  const formattedPrice = price.toFixed(2);
-  return `£${formattedPrice}`;
-};
-
 export const handleItemButtonClick = () => {
   alert("This item is still under development!");
 };
@@ -79,13 +83,13 @@ export const handleItemButtonClick = () => {
 const pageVariants = {
   initial: { opacity: 0, x: "-100vw" },
   in: { opacity: 1, x: 0 },
-  out: { opacity: 0, x: "100vw" }
+  out: { opacity: 0, x: "100vw" },
 };
 
 const pageTransition = {
   type: "tween",
   ease: "anticipate",
-  duration: 0.5
+  duration: 0.5,
 };
 
 const AnimatedPage = ({ children }) => {
