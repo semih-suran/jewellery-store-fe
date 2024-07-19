@@ -6,7 +6,6 @@ import Necklaces from "./Necklaces";
 import Bracelets from "./Bracelets";
 
 const HomePage = () => {
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-24">
       <main className="flex-grow space-y-8">

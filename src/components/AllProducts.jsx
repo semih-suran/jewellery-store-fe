@@ -10,8 +10,9 @@ const AllProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const items = await fetchAllItems();
-        setItems(items || []);
+        const fetchedItems = await fetchAllItems();
+        console.log("fetchedItems >>>", fetchedItems);
+        setItems(fetchedItems || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setItems([]);
@@ -39,9 +40,9 @@ const AllProducts = () => {
                 >
                   <Item
                     id={item.item_id}
+                    name={item.name}
                     price={item.price}
-                    imageUrl={item.images_url[0]}
-                    title={item.name}
+                    images_url={item.images_url}
                   />
                 </motion.div>
               ))}

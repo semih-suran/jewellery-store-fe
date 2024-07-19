@@ -45,11 +45,11 @@ const Necklaces = () => {
         >
           {items.map((item, index) => (
             <Item
-            key={index}
-            price={item.price}
-            imageUrl={item.images_url}
-            title={item.name}
-            onClick={() => alert(`Clicked on ${item.description}`)}
+              key={index}
+              id={item.item_id}
+              name={item.name}
+              price={item.price}
+              images_url={item.images_url}
             />
           ))}
         </div>

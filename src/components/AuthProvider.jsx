@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
   const login = (response) => {
     try {
       const token = response.credential;
-      if (token.split('.').length !== 3) {
+      if (token.split(".").length !== 3) {
         throw new Error("Invalid token format");
       }
       localStorage.setItem("token", token);

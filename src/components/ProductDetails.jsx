@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { fetchProductById } from "../services/api";
 import { ShoppingBagContext } from "./ShoppingBagContext";
 import { FavouritesContext } from "./FavouritesContext";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { FaHeart, FaRegHeart, FaCartPlus } from "react-icons/fa";
+import { BsFillCartCheckFill } from "react-icons/bs";
+import { motion, useAnimation } from "framer-motion";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -13,7 +14,12 @@ const ProductDetails = () => {
   const { addToBag } = useContext(ShoppingBagContext);
   const { favourites, addToFavourites, removeFromFavourites } =
     useContext(FavouritesContext);
-  const isFavourite = favourites.some((item) => item.name === product?.name);
+  const [isAdded, setIsAdded] = useState(false);
+  const isFavourite = favourites.some(
+    (item) => item.item_id === product?.item_id
+  );
+  const controls = useAnimation();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +36,10 @@ const ProductDetails = () => {
 
   const handleAddToBag = () => {
     addToBag({ ...product, quantity });
+    setIsAdded(true);
+    controls.start({ scale: 1.2, transition: { duration: 0.1 } }).then(() => {
+      controls.start({ scale: 1, transition: { duration: 0.1 } });
+    });
   };
 
   const toggleFavourite = () => {
@@ -38,6 +48,27 @@ const ProductDetails = () => {
     } else {
       addToFavourites(product);
     }
+  };
+
+  useEffect(() => {
+    if (isAdded) {
+      const timer = setTimeout(() => {
+        setIsAdded(false);
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [isAdded]);
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === product.images_url.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? product.images_url.length - 1 : prevIndex - 1
+    );
   };
 
   if (!product) {
@@ -49,18 +80,34 @@ const ProductDetails = () => {
       <main className="flex-grow flex flex-col items-center p-8">
         <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
         <div className="flex flex-col md:flex-row items-center mt-4">
-          <motion.div
-            className="w-full md:w-1/2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <img
-              src={product.images_url[0]}
+          <div className="relative w-full md:w-1/2">
+            <motion.img
+              key={currentImageIndex}
+              src={product.images_url[currentImageIndex]}
               alt={product.name}
               className="w-full h-auto"
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 100 }}
+              transition={{ duration: 0.5 }}
             />
-          </motion.div>
+            {product.images_url.length > 1 && (
+              <div className="absolute top-1/2 w-full flex justify-between transform -translate-y-1/2">
+                <button
+                  onClick={handlePrevImage}
+                  className="bg-gray-700 text-white p-2 rounded-l"
+                >
+                  {"<"}
+                </button>
+                <button
+                  onClick={handleNextImage}
+                  className="bg-gray-700 text-white p-2 rounded-r"
+                >
+                  {">"}
+                </button>
+              </div>
+            )}
+          </div>
           <div className="w-full md:w-1/2 p-8">
             <p className="text-xl text-gray-800 mb-4">{product.description}</p>
             <p className="text-xl text-gray-800 mb-4">Type: {product.type}</p>
@@ -70,7 +117,7 @@ const ProductDetails = () => {
               Color: {product.color1}, {product.color2}
             </p>
             <p className="text-2xl font-bold text-gray-800 mb-4">
-              ${product.price}
+              £{product.price}
             </p>
             <div className="flex items-center mb-4">
               <label htmlFor="quantity" className="mr-2 text-gray-800">
@@ -86,12 +133,17 @@ const ProductDetails = () => {
                 className="w-16 p-2 border rounded"
               />
             </div>
-            <button
+            <motion.button
               onClick={handleAddToBag}
-              className="bg-black text-white py-2 px-4 rounded mb-4"
+              className="text-white py-2 px-4 rounded mb-4"
+              animate={controls}
             >
-              Add to Bag
-            </button>
+              {isAdded ? (
+                <BsFillCartCheckFill className="w-6 h-6 text-green-500 hover:text-green-700" />
+              ) : (
+                <FaCartPlus className="w-6 h-6 text-gray-500 hover:text-black" />
+              )}
+            </motion.button>
             <button
               onClick={toggleFavourite}
               className="ml-2 focus:outline-none"
