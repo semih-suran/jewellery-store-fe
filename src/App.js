@@ -17,6 +17,7 @@ import NecklacesRaw from "./components/NecklacesRaw";
 import ShoppingBag from "./components/ShoppingBag";
 import AllProducts from "./components/AllProducts";
 import MyAccount from "./components/MyAccount";
+import ProductDetails from "./components/ProductDetails"; // Import the new component
 import { ShoppingBagProvider } from "./components/ShoppingBagContext";
 import AnimatedPage from "./services/api";
 import FavouritesProvider from "./components/FavouritesContext";
@@ -111,6 +112,14 @@ const AppRoutes = () => {
           element={
             <AnimatedPage>
               <MyAccount />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/product/:productId"
+          element={
+            <AnimatedPage>
+              <ProductDetails />
             </AnimatedPage>
           }
         />

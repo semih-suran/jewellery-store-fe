@@ -22,8 +22,8 @@ const RingsRaw = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-32">
-      <main className="flex-grow space-y-8 p-8">
-        <h1 className="text-3xl font-bold text-center text-gray-800">Rings</h1>
+      <main className="flex-grow flex flex-col items-center p-8">
+        <h1 className="text-3xl font-bold text-gray-800">Rings</h1>
         {items.length === 0 ? (
           <p>No products available...</p>
         ) : (
@@ -38,6 +38,7 @@ const RingsRaw = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <Item
+                    id={item.item_id}
                     price={item.price}
                     imageUrl={item.images_url}
                     title={item.name}
