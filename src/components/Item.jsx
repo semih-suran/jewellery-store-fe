@@ -8,9 +8,9 @@ import { motion, useAnimation } from "framer-motion";
 
 const Item = ({ id, name, images_url, price }) => {
   const { addToBag } = useContext(ShoppingBagContext);
-  const { favourites, addToFavourites, removeFromFavourites } =
-    useContext(FavouritesContext);
+  const { favourites, addToFavourites, removeFromFavourites } = useContext(FavouritesContext);
   const [isAdded, setIsAdded] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const isFavourite = favourites.some((item) => item.item_id === id);
   const controls = useAnimation();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Item = ({ id, name, images_url, price }) => {
   };
 
   const handleAddToBag = () => {
-    addToBag({ item_id: id, name, images_url, price });
+    addToBag({ item_id: id, name, images_url, price, quantity });
     setIsAdded(true);
     controls.start({ scale: 1.2, transition: { duration: 0.1 } }).then(() => {
       controls.start({ scale: 1, transition: { duration: 0.1 } });
@@ -56,6 +56,20 @@ const Item = ({ id, name, images_url, price }) => {
         <h2 className="text-xl font-bold">{name}</h2>
         <p>£{price}</p>
         <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center">
+            <label htmlFor="quantity" className="mr-2 text-gray-800">
+              Qty:
+            </label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              className="w-16 p-2 border rounded"
+            />
+          </div>
           <motion.button
             onClick={handleAddToBag}
             className="text-xs py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

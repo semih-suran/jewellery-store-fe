@@ -16,7 +16,6 @@ const FavouritesProvider = ({ children }) => {
   }, [favourites]);
 
   const addToFavourites = (item) => {
-    console.log("addtofavourites item >>>", item);
     setFavourites((prevFavourites) => {
       if (prevFavourites.some((fav) => fav.item_id === item.item_id)) {
         return prevFavourites;

@@ -129,7 +129,7 @@ const ProductDetails = () => {
                 name="quantity"
                 min="1"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
                 className="w-16 p-2 border rounded"
               />
             </div>
