@@ -6,7 +6,6 @@ export const ShoppingBagProvider = ({ children }) => {
   const [bagItems, setBagItems] = useState([]);
 
   const addToBag = (item) => {
-    console.log("addtobag item >>>", item);
     setBagItems((prevBagItems) => {
       if (prevBagItems.some((bagItem) => bagItem.item_id === item.item_id)) {
         return prevBagItems;
@@ -25,9 +24,18 @@ export const ShoppingBagProvider = ({ children }) => {
     setBagItems([]);
   };
 
+  const updateQuantity = (itemId, quantity) => {
+    if (quantity < 1) return;
+    setBagItems((prevBagItems) =>
+      prevBagItems.map((item) =>
+        item.item_id === itemId ? { ...item, quantity } : item
+      )
+    );
+  };
+
   return (
     <ShoppingBagContext.Provider
-      value={{ bagItems, addToBag, removeFromBag, clearBag }}
+      value={{ bagItems, addToBag, removeFromBag, clearBag, updateQuantity }}
     >
       {children}
     </ShoppingBagContext.Provider>
