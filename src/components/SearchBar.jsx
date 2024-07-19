@@ -43,7 +43,10 @@ const SearchBar = ({ onSearch }) => {
         </button>
       )}
       {isExpanded && (
-        <form onSubmit={handleSearchSubmit} className="flex items-center border rounded-md overflow-hidden">
+        <form
+          onSubmit={handleSearchSubmit}
+          className="flex items-center border rounded-md overflow-hidden"
+        >
           <input
             type="text"
             placeholder="Search..."

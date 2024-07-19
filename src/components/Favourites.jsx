@@ -12,15 +12,15 @@ function Favourites() {
   const [isAdded, setIsAdded] = useState({});
 
   const handleAddToBag = async (item) => {
-    setIsAdded((prev) => ({ ...prev, [item.title]: true }));
+    setIsAdded((prev) => ({ ...prev, [item.item_id]: true }));
     await new Promise((resolve) => setTimeout(resolve, 1000));
     addToBag(item);
     removeFromFavourites(item);
-    setIsAdded((prev) => ({ ...prev, [item.title]: false }));
+    setIsAdded((prev) => ({ ...prev, [item.item_id]: false }));
   };
 
   const handleRemoveFromFavourites = (item) => {
-    setIsAdded((prev) => ({ ...prev, [item.title]: "removing" }));
+    setIsAdded((prev) => ({ ...prev, [item.item_id]: "removing" }));
     setTimeout(() => {
       removeFromFavourites(item);
     }, 500);
@@ -40,51 +40,53 @@ function Favourites() {
                   key={index}
                   initial={{ opacity: 1 }}
                   animate={{
-                    opacity: isAdded[item.title] === "removing" ? 0 : 1,
+                    opacity: isAdded[item.item_id] === "removing" ? 0 : 1,
                   }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
                   className="bg-white p-4 rounded-lg shadow-md"
                 >
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title}
-                    className="w-full h-48 object-cover rounded-lg"
-                  />
-                  <div className="mt-2 text-center">
-                    <h2 className="text-xl font-bold">{item.title}</h2>
-                    <p>{item.price}</p>
-                    <div className="flex items-center justify-between mt-2">
-                      <motion.button
-                        onClick={() => handleAddToBag(item)}
-                        className="text-xs py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        animate={{
-                          scale:
-                            isAdded[item.title] &&
-                            isAdded[item.title] !== "removing"
-                              ? [1, 1.2, 1]
-                              : 1,
-                        }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        {isAdded[item.title] &&
-                        isAdded[item.title] !== "removing" ? (
-                          <BsFillCartCheckFill className="w-6 h-6 text-green-500 hover:text-green-700" />
-                        ) : (
-                          <FaCartPlus className="w-6 h-6 text-gray-500 hover:text-gray-700" />
-                        )}
-                      </motion.button>
-                      <motion.button
-                        onClick={() => handleRemoveFromFavourites(item)}
-                        className="text-xs py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        initial={{ opacity: 1 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <FaHeartBroken className="w-6 h-6 text-red-500 hover:text-red-700" />
-                      </motion.button>
+                  <Link to={`/product/${item.item_id}`}>
+                    <img
+                      src={item.images_url[0]}
+                      alt={item.name}
+                      className="w-full h-48 object-cover rounded-lg"
+                    />
+                    <div className="mt-2 text-center">
+                      <h2 className="text-xl font-bold">{item.name}</h2>
                     </div>
+                  </Link>
+                  <p className="text-center">£{item.price}</p>
+                  <div className="flex items-center justify-between mt-2">
+                    <motion.button
+                      onClick={() => handleAddToBag(item)}
+                      className="text-xs py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      animate={{
+                        scale:
+                          isAdded[item.item_id] &&
+                          isAdded[item.item_id] !== "removing"
+                            ? [1, 1.2, 1]
+                            : 1,
+                      }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {isAdded[item.item_id] &&
+                      isAdded[item.item_id] !== "removing" ? (
+                        <BsFillCartCheckFill className="w-6 h-6 text-green-500 hover:text-green-700" />
+                      ) : (
+                        <FaCartPlus className="w-6 h-6 text-gray-500 hover:text-gray-700" />
+                      )}
+                    </motion.button>
+                    <motion.button
+                      onClick={() => handleRemoveFromFavourites(item)}
+                      className="text-xs py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      initial={{ opacity: 1 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <FaHeartBroken className="w-6 h-6 text-red-500 hover:text-red-700" />
+                    </motion.button>
                   </div>
                 </motion.div>
               ))}

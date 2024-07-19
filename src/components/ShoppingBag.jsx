@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShoppingBagContext } from "./ShoppingBagContext";
-import {handleItemButtonClick} from "../services/api"
+import { handleItemButtonClick } from "../services/api";
 
 function ShoppingBag() {
   const { bagItems, removeFromBag, clearBag } = useContext(ShoppingBagContext);
-
   const totalPrice = bagItems
     .reduce((total, item) => {
       const priceNumber = parseFloat(item.price.replace("£", ""));
       return total + priceNumber;
     }, 0)
     .toFixed(2);
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 p-8 pt-32">
@@ -23,20 +23,24 @@ function ShoppingBag() {
           <div className="grid grid-cols-1 gap-4 mt-4">
             {bagItems.map((item, index) => (
               <div
-                key={index}
-                className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg"
+                key={item.item_id}
+                className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg cursor-pointer"
+                onClick={() => navigate(`/product/${item.item_id}`)}
               >
                 <img
-                  src={item.imageUrl}
-                  alt={item.title}
+                  src={item.images_url}
+                  alt={item.name}
                   className="w-24 h-24 object-cover rounded-lg mr-4"
                 />
                 <div>
-                  <p>{item.title}</p>
-                  <p>{item.price}</p>
+                  <p>{item.name}</p>
+                  <p>£{item.price}</p>
                 </div>
                 <button
-                  onClick={() => removeFromBag(index)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeFromBag(item.item_id);
+                  }}
                   className="text-xs bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-700 focus:outline-none"
                 >
                   Remove

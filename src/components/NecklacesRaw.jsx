@@ -29,9 +29,9 @@ const NecklacesRaw = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             <AnimatePresence>
-              {items.map((item, index) => (
+              {items.map((item) => (
                 <motion.div
-                  key={index}
+                  key={item.item_id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -39,10 +39,9 @@ const NecklacesRaw = () => {
                 >
                   <Item
                     id={item.item_id}
+                    name={item.name}
                     price={item.price}
-                    imageUrl={item.images_url}
-                    title={item.name}
-                    onClick={() => alert(`Clicked on ${item.title}`)}
+                    images_url={item.images_url}
                   />
                 </motion.div>
               ))}

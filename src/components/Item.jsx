@@ -6,25 +6,25 @@ import { FaHeart, FaRegHeart, FaCartPlus } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion, useAnimation } from "framer-motion";
 
-const Item = ({ id, title, imageUrl, price }) => {
+const Item = ({ id, name, images_url, price }) => {
   const { addToBag } = useContext(ShoppingBagContext);
   const { favourites, addToFavourites, removeFromFavourites } =
     useContext(FavouritesContext);
   const [isAdded, setIsAdded] = useState(false);
-  const isFavourite = favourites.some((item) => item.title === title);
+  const isFavourite = favourites.some((item) => item.item_id === id);
   const controls = useAnimation();
   const navigate = useNavigate();
 
   const toggleFavourite = () => {
     if (isFavourite) {
-      removeFromFavourites({ title, imageUrl, price });
+      removeFromFavourites({ item_id: id });
     } else {
-      addToFavourites({ title, imageUrl, price });
+      addToFavourites({ item_id: id, name, images_url, price });
     }
   };
 
   const handleAddToBag = () => {
-    addToBag({ title, imageUrl, price });
+    addToBag({ item_id: id, name, images_url, price });
     setIsAdded(true);
     controls.start({ scale: 1.2, transition: { duration: 0.1 } }).then(() => {
       controls.start({ scale: 1, transition: { duration: 0.1 } });
@@ -47,14 +47,14 @@ const Item = ({ id, title, imageUrl, price }) => {
   return (
     <div className="w-full max-w-xs bg-white p-4 rounded-lg shadow-md flex-shrink-0">
       <img
-        src={imageUrl}
-        alt={title}
+        src={images_url[0]}
+        alt={name}
         className="w-full h-48 object-contain rounded-lg cursor-pointer"
         onClick={handleNavigate}
       />
       <div className="mt-2 text-center">
-        <h2 className="text-xl font-bold">{title}</h2>
-        <p>{price}</p>
+        <h2 className="text-xl font-bold">{name}</h2>
+        <p>£{price}</p>
         <div className="flex items-center justify-between mt-2">
           <motion.button
             onClick={handleAddToBag}

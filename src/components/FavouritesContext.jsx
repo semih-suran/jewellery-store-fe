@@ -16,8 +16,9 @@ const FavouritesProvider = ({ children }) => {
   }, [favourites]);
 
   const addToFavourites = (item) => {
+    console.log("addtofavourites item >>>", item);
     setFavourites((prevFavourites) => {
-      if (prevFavourites.some((fav) => fav.title === item.title)) {
+      if (prevFavourites.some((fav) => fav.item_id === item.item_id)) {
         return prevFavourites;
       }
       return [...prevFavourites, item];
@@ -26,7 +27,7 @@ const FavouritesProvider = ({ children }) => {
 
   const removeFromFavourites = (item) => {
     setFavourites((prevFavourites) =>
-      prevFavourites.filter((fav) => fav.title !== item.title)
+      prevFavourites.filter((fav) => fav.item_id !== item.item_id)
     );
   };
 

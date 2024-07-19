@@ -6,13 +6,19 @@ export const ShoppingBagProvider = ({ children }) => {
   const [bagItems, setBagItems] = useState([]);
 
   const addToBag = (item) => {
-    setBagItems([...bagItems, item]);
+    console.log("addtobag item >>>", item);
+    setBagItems((prevBagItems) => {
+      if (prevBagItems.some((bagItem) => bagItem.item_id === item.item_id)) {
+        return prevBagItems;
+      }
+      return [...prevBagItems, item];
+    });
   };
 
-  const removeFromBag = (index) => {
-    const newBagItems = [...bagItems];
-    newBagItems.splice(index, 1);
-    setBagItems(newBagItems);
+  const removeFromBag = (itemId) => {
+    setBagItems((prevBagItems) =>
+      prevBagItems.filter((item) => item.item_id !== itemId)
+    );
   };
 
   const clearBag = () => {
