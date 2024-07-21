@@ -5,12 +5,17 @@ export const ShoppingBagContext = createContext();
 export const ShoppingBagProvider = ({ children }) => {
   const [bagItems, setBagItems] = useState([]);
 
-  const addToBag = (item) => {
+  const addToBag = (item, quantity = 1) => {
     setBagItems((prevBagItems) => {
-      if (prevBagItems.some((bagItem) => bagItem.item_id === item.item_id)) {
-        return prevBagItems;
+      const existingItem = prevBagItems.find((bagItem) => bagItem.item_id === item.item_id);
+      if (existingItem) {
+        return prevBagItems.map((bagItem) =>
+          bagItem.item_id === item.item_id
+            ? { ...bagItem, quantity: bagItem.quantity + quantity }
+            : bagItem
+        );
       }
-      return [...prevBagItems, item];
+      return [...prevBagItems, { ...item, quantity }];
     });
   };
 

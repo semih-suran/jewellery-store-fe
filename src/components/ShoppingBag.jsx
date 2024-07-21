@@ -51,14 +51,12 @@ function ShoppingBag() {
                     <img
                       src={item.images_url[0]}
                       alt={item.name}
-                      className="w-24 h-24 object-cover rounded-lg mr-4"
+                      className="w-24 h-24 object-cover rounded-lg mr-4 cursor-pointer"
                     />
                     <div className="flex flex-col md:flex-row items-center justify-between w-full">
                       <div className="flex items-center">
                         <h2 className="font-bold mr-2">{item.name}</h2>
-                        <p className="font-semibold text-gray-700">
-                          £{item.price}
-                        </p>
+
                       </div>
                     </div>
                   </div>
