@@ -11,7 +11,6 @@ const AllProducts = () => {
     const fetchData = async () => {
       try {
         const fetchedItems = await fetchAllItems();
-        console.log("fetchedItems >>>", fetchedItems);
         setItems(fetchedItems || []);
       } catch (error) {
         console.error("Error fetching articles:", error);

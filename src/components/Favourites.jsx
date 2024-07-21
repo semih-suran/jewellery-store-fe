@@ -10,11 +10,20 @@ function Favourites() {
   const { favourites, removeFromFavourites } = useContext(FavouritesContext);
   const { addToBag } = useContext(ShoppingBagContext);
   const [isAdded, setIsAdded] = useState({});
+  const [quantities, setQuantities] = useState({});
+
+  const handleQuantityChange = (item_id, quantity) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [item_id]: quantity,
+    }));
+  };
 
   const handleAddToBag = async (item) => {
+    const quantity = quantities[item.item_id] || 1;
     setIsAdded((prev) => ({ ...prev, [item.item_id]: true }));
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    addToBag(item);
+    addToBag(item, quantity);
     removeFromFavourites(item);
     setIsAdded((prev) => ({ ...prev, [item.item_id]: false }));
   };
@@ -58,6 +67,20 @@ function Favourites() {
                   </Link>
                   <p className="text-center">£{item.price}</p>
                   <div className="flex items-center justify-between mt-2">
+                  
+                    <label htmlFor="quantity" className="mr-2 text-gray-800">
+              Qty:
+            </label>
+                    
+                    <input
+                      type="number"
+                      value={quantities[item.item_id] || 1}
+                      min="1"
+                      onChange={(e) =>
+                        handleQuantityChange(item.item_id, parseInt(e.target.value))
+                      }
+                      className="w-16 text-center border rounded-md"
+                    />
                     <motion.button
                       onClick={() => handleAddToBag(item)}
                       className="text-xs py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

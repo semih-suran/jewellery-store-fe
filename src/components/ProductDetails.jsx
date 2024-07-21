@@ -6,6 +6,7 @@ import { FavouritesContext } from "./FavouritesContext";
 import { FaHeart, FaRegHeart, FaCartPlus } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion, useAnimation } from "framer-motion";
+import { useSwipeable } from "react-swipeable";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -71,6 +72,13 @@ const ProductDetails = () => {
     );
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleNextImage,
+    onSwipedRight: handlePrevImage,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
   if (!product) {
     return <p>Loading...</p>;
   }
@@ -80,7 +88,7 @@ const ProductDetails = () => {
       <main className="flex-grow flex flex-col items-center p-8">
         <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
         <div className="flex flex-col md:flex-row items-center mt-4">
-          <div className="relative w-full md:w-1/2">
+          <div className="relative w-full md:w-1/2" {...swipeHandlers}>
             <motion.img
               key={currentImageIndex}
               src={product.images_url[currentImageIndex]}
@@ -109,13 +117,6 @@ const ProductDetails = () => {
             )}
           </div>
           <div className="w-full md:w-1/2 p-8">
-            <p className="text-xl text-gray-800 mb-4">{product.description}</p>
-            <p className="text-xl text-gray-800 mb-4">Type: {product.type}</p>
-            <p className="text-xl text-gray-800 mb-4">Style: {product.style}</p>
-            <p className="text-xl text-gray-800 mb-4">Size: {product.size}</p>
-            <p className="text-xl text-gray-800 mb-4">
-              Color: {product.color1}, {product.color2}
-            </p>
             <p className="text-2xl font-bold text-gray-800 mb-4">
               £{product.price}
             </p>
@@ -130,30 +131,37 @@ const ProductDetails = () => {
                 min="1"
                 value={quantity}
                 onChange={(e) => setQuantity(parseInt(e.target.value))}
-                className="w-16 p-2 border rounded"
+                className="w-12 p-1 border rounded"
               />
+              <motion.button
+                onClick={handleAddToBag}
+                className="mx-4 text-white rounded"
+                animate={controls}
+              >
+                {isAdded ? (
+                  <BsFillCartCheckFill className="w-6 h-6 text-green-500 hover:text-green-700" />
+                ) : (
+                  <FaCartPlus className="w-6 h-6 text-gray-500 hover:text-black" />
+                )}
+              </motion.button>
+              <button
+                onClick={toggleFavourite}
+                className="focus:outline-none"
+              >
+                {isFavourite ? (
+                  <FaHeart className="w-6 h-6 text-red-500 hover:text-red-700" />
+                ) : (
+                  <FaRegHeart className="w-6 h-6 text-gray-500 hover:text-gray-700" />
+                )}
+              </button>
             </div>
-            <motion.button
-              onClick={handleAddToBag}
-              className="text-white py-2 px-4 rounded mb-4"
-              animate={controls}
-            >
-              {isAdded ? (
-                <BsFillCartCheckFill className="w-6 h-6 text-green-500 hover:text-green-700" />
-              ) : (
-                <FaCartPlus className="w-6 h-6 text-gray-500 hover:text-black" />
-              )}
-            </motion.button>
-            <button
-              onClick={toggleFavourite}
-              className="ml-2 focus:outline-none"
-            >
-              {isFavourite ? (
-                <FaHeart className="w-6 h-6 text-red-500 hover:text-red-700" />
-              ) : (
-                <FaRegHeart className="w-6 h-6 text-gray-500 hover:text-gray-700" />
-              )}
-            </button>
+            <p className="text-xl text-gray-800 mb-4">{product.description}</p>
+            <p className="text-xl text-gray-800 mb-4">Type: {product.type}</p>
+            <p className="text-xl text-gray-800 mb-4">Style: {product.style}</p>
+            <p className="text-xl text-gray-800 mb-4">Size: {product.size}</p>
+            <p className="text-xl text-gray-800 mb-4">
+              Color: {product.color1}, {product.color2}
+            </p>
           </div>
         </div>
       </main>
