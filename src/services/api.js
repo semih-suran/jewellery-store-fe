@@ -14,6 +14,24 @@ export const fetchAllItems = async () => {
   }
 };
 
+export const algoliasearch = require("algoliasearch");
+
+fetch(`${BASE_URL}/items`)
+  .then((data) => data.json())
+  .then((records) => {
+    const client = algoliasearch(
+      "L7WYB1CCJE",
+      "5f92b72167eedbd0762bb353a5794c2a"
+    );
+
+    const index = client.initIndex("jewellery-store");
+
+    index.saveObjects(records, { autoGenerateObjectIDIfNotExist: true });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
 export const fetchBracelets = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/items/type/bracelet`);
@@ -61,18 +79,6 @@ export const fetchProductById = async (productId) => {
   } catch (error) {
     console.error(`Error fetching product by ID ${productId}:`, error);
     return null;
-  }
-};
-
-export const fetchSearchResults = async (query) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/items`, {
-      params: { query },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching search results:", error);
-    return [];
   }
 };
 

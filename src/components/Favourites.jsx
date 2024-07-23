@@ -67,17 +67,19 @@ function Favourites() {
                   </Link>
                   <p className="text-center">£{item.price}</p>
                   <div className="flex items-center justify-between mt-2">
-                  
                     <label htmlFor="quantity" className="mr-2 text-gray-800">
-              Qty:
-            </label>
-                    
+                      Qty:
+                    </label>
+
                     <input
                       type="number"
                       value={quantities[item.item_id] || 1}
                       min="1"
                       onChange={(e) =>
-                        handleQuantityChange(item.item_id, parseInt(e.target.value))
+                        handleQuantityChange(
+                          item.item_id,
+                          parseInt(e.target.value)
+                        )
                       }
                       className="w-16 text-center border rounded-md"
                     />

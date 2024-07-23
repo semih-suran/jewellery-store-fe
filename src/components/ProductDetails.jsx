@@ -144,10 +144,7 @@ const ProductDetails = () => {
                   <FaCartPlus className="w-6 h-6 text-gray-500 hover:text-black" />
                 )}
               </motion.button>
-              <button
-                onClick={toggleFavourite}
-                className="focus:outline-none"
-              >
+              <button onClick={toggleFavourite} className="focus:outline-none">
                 {isFavourite ? (
                   <FaHeart className="w-6 h-6 text-red-500 hover:text-red-700" />
                 ) : (
