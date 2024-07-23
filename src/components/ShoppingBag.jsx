@@ -56,7 +56,6 @@ function ShoppingBag() {
                     <div className="flex flex-col md:flex-row items-center justify-between w-full">
                       <div className="flex items-center">
                         <h2 className="font-bold mr-2">{item.name}</h2>
-
                       </div>
                     </div>
                   </div>
@@ -126,7 +125,8 @@ function ShoppingBag() {
             }}
             className="w-80 mt-4 py-2 px-4 rounded-md bg-green-500 text-white hover:bg-green-700 focus:outline-none flex items-center justify-center"
           >
-             <FaPaypal />{`ayPal £${totalPrice}`}
+            <FaPaypal />
+            {`ayPal £${totalPrice}`}
           </Link>
         )}
       </div>

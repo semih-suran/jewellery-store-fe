@@ -17,10 +17,11 @@ import NecklacesRaw from "./components/NecklacesRaw";
 import ShoppingBag from "./components/ShoppingBag";
 import AllProducts from "./components/AllProducts";
 import MyAccount from "./components/MyAccount";
-import ProductDetails from "./components/ProductDetails"; // Import the new component
+import ProductDetails from "./components/ProductDetails";
 import { ShoppingBagProvider } from "./components/ShoppingBagContext";
 import AnimatedPage from "./services/api";
 import FavouritesProvider from "./components/FavouritesContext";
+import SearchResults from "./components/SearchResults";
 
 const App = () => {
   return (
@@ -41,7 +42,7 @@ const AppRoutes = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence wait>
+    <AnimatePresence>
       <Routes location={location} key={location.pathname}>
         <Route
           path="/"
@@ -123,6 +124,7 @@ const AppRoutes = () => {
             </AnimatedPage>
           }
         />
+        <Route path="/search-results" element={<SearchResults />} />
       </Routes>
     </AnimatePresence>
   );

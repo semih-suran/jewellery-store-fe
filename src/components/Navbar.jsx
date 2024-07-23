@@ -4,9 +4,8 @@ import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { AuthContext } from "./AuthProvider.jsx";
 import { FavouritesContext } from "./FavouritesContext.jsx";
 import { ShoppingBagContext } from "./ShoppingBagContext.jsx";
-import { FaHeart, FaShoppingCart } from "react-icons/fa";
-import SearchBar from "./SearchBar.jsx";
-import { fetchSearchResults } from "../services/api";
+import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
+import { Search } from "./Search.jsx";
 
 const Navbar = () => {
   const { user, login, logout } = useContext(AuthContext);
@@ -15,7 +14,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [buttonText, setButtonText] = useState("Search"); // State for button text
+
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -44,12 +45,6 @@ const Navbar = () => {
     }
   };
 
-  const handleSearch = async (query) => {
-    console.log("Searching for:", query);
-    const results = await fetchSearchResults(query);
-    setSearchResults(results);
-  };
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -60,6 +55,16 @@ const Navbar = () => {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleSearch = () => {
+    setSearchOpen(!searchOpen);
+    setButtonText(searchOpen ? "Search" : "Cancel"); // Toggle button text
+  };
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setButtonText("Search"); // Reset button text when closing search
   };
 
   const renderMenuItems = (className) => (
@@ -208,32 +213,15 @@ const Navbar = () => {
               </>
             )}
           </div>
-
           <div className="flex-grow flex justify-end">
-            <SearchBar onSearch={handleSearch} />
+            <button className="px-4 py-2 rounded-full" onClick={toggleSearch}>
+              {buttonText === "Search" ? <FaSearch className="text-gray-700" /> : <p className="text-gray-700">Cancel</p>}
+            </button>
           </div>
         </div>
-        {searchResults.length > 0 && (
-          <div className="bg-white shadow-lg rounded-lg mt-4 p-4">
-            <h2 className="text-xl font-semibold mb-2">Search Results</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {searchResults.map((result) => (
-                <div
-                  key={result.id}
-                  className="border rounded-lg p-4 hover:shadow-md"
-                >
-                  <Link to={`/item/${result.id}`}>
-                    <img
-                      src={result.image}
-                      alt={result.name}
-                      className="w-full h-32 object-cover rounded-t-lg"
-                    />
-                    <h3 className="text-lg font-medium mt-2">{result.name}</h3>
-                    <p className="text-gray-600 mt-1">{result.description}</p>
-                  </Link>
-                </div>
-              ))}
-            </div>
+        {searchOpen && (
+          <div className="mt-4">
+            <Search onSearchClose={closeSearch} />
           </div>
         )}
       </div>

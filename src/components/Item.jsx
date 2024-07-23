@@ -8,7 +8,8 @@ import { motion, useAnimation } from "framer-motion";
 
 const Item = ({ id, name, images_url, price }) => {
   const { addToBag } = useContext(ShoppingBagContext);
-  const { favourites, addToFavourites, removeFromFavourites } = useContext(FavouritesContext);
+  const { favourites, addToFavourites, removeFromFavourites } =
+    useContext(FavouritesContext);
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const isFavourite = favourites.some((item) => item.item_id === id);
