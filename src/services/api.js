@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { motion } from "framer-motion";
 
-const BASE_URL = "https://thenews-lhhv.onrender.com/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchAllItems = async () => {
   try {
@@ -20,8 +20,8 @@ fetch(`${BASE_URL}/items`)
   .then((data) => data.json())
   .then((records) => {
     const client = algoliasearch(
-      "L7WYB1CCJE",
-      "5f92b72167eedbd0762bb353a5794c2a"
+      process.env.REACT_APP_ALGOLIA_APP_ID,
+      process.env.REACT_APP_ALGOLIA_API_KEY
     );
 
     const index = client.initIndex("jewellery-store");
