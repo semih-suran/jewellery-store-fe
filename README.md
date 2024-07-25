@@ -14,15 +14,16 @@ Check out the live demo of the Jewellery Store: [Jewellery Store Live Page](http
 
 ## Backend on Render
 
-Check out the Endpoints of the Jewellery Store: [Jewellery Store Endpoints](https://jewellery-store-be.onrender.com/api)
+Check out the Endpoints of the Jewellery Store: [Jewellery Store Endpoints](https://thenews-lhhv.onrender.com/api)
 
 ## Tech Stack
 
-- React
-- React Router
-- Axios (for API requests)
-- Tailwind CSS (for styling)
 - JavaScript
+- React
+- Axios
+- Tailwind CSS
+- OAuth2.0
+
 
 ## Authentication
 
@@ -52,6 +53,8 @@ To get started with this project, follow these steps:
    - create .env files
 
 3. Start the development server:
+
+   - npm run build
    - npm start
 
 4. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the app.

@@ -15,7 +15,7 @@ const Navbar = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [buttonText, setButtonText] = useState("Search"); // State for button text
+  const [buttonText, setButtonText] = useState("Search");
 
   const dropdownRef = useRef(null);
 
@@ -59,12 +59,12 @@ const Navbar = () => {
 
   const toggleSearch = () => {
     setSearchOpen(!searchOpen);
-    setButtonText(searchOpen ? "Search" : "Cancel"); // Toggle button text
+    setButtonText(searchOpen ? "Search" : "Cancel");
   };
 
   const closeSearch = () => {
     setSearchOpen(false);
-    setButtonText("Search"); // Reset button text when closing search
+    setButtonText("Search");
   };
 
   const renderMenuItems = (className) => (
