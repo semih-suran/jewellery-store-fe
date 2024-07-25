@@ -6,6 +6,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
 import Navbar from "./components/Navbar";
 import HomePage from "./components/HomePage";
 import Favourites from "./components/Favourites";
@@ -19,20 +21,28 @@ import AllProducts from "./components/AllProducts";
 import MyAccount from "./components/MyAccount";
 import ProductDetails from "./components/ProductDetails";
 import { ShoppingBagProvider } from "./components/ShoppingBagContext";
-import AnimatedPage from "./services/api";
 import FavouritesProvider from "./components/FavouritesContext";
 import SearchResults from "./components/SearchResults";
+import CheckoutPage from "./components/CheckoutPage";
+import AnimatedPage from "./services/api";
+
+const initialOptions = {
+  "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+  currency: "GBP",
+};
 
 const App = () => {
   return (
     <AuthProvider>
       <FavouritesProvider>
-        <ShoppingBagProvider>
-          <Router>
-            <Navbar />
-            <AppRoutes />
-          </Router>
-        </ShoppingBagProvider>
+        <PayPalScriptProvider options={initialOptions}>
+          <ShoppingBagProvider>
+            <Router>
+              <Navbar />
+              <AppRoutes />
+            </Router>
+          </ShoppingBagProvider>
+        </PayPalScriptProvider>
       </FavouritesProvider>
     </AuthProvider>
   );
@@ -124,7 +134,22 @@ const AppRoutes = () => {
             </AnimatedPage>
           }
         />
-        <Route path="/search-results" element={<SearchResults />} />
+        <Route
+          path="/search-results"
+          element={
+            <AnimatedPage>
+              <SearchResults />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <AnimatedPage>
+              <CheckoutPage />
+            </AnimatedPage>
+          }
+        />
       </Routes>
     </AnimatePresence>
   );

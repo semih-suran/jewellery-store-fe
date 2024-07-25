@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ShoppingBagContext } from "./ShoppingBagContext";
-import { FaTrash, FaMinus, FaPlus, FaPaypal } from "react-icons/fa";
+import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
 function ShoppingBag() {
@@ -26,6 +26,10 @@ function ShoppingBag() {
     setTimeout(() => {
       removeFromBag(item.item_id);
     }, 500);
+  };
+
+  const handleCheckout = () => {
+    navigate("/checkout", { state: { totalPrice } });
   };
 
   return (
@@ -117,17 +121,12 @@ function ShoppingBag() {
           Continue Shopping
         </Link>
         {bagItems.length > 0 && (
-          <Link
-            to="#"
-            onClick={(e) => {
-              e.preventDefault();
-              alert("Under Development!");
-            }}
+          <button
+            onClick={handleCheckout}
             className="w-80 mt-4 py-2 px-4 rounded-md bg-green-500 text-white hover:bg-green-700 focus:outline-none flex items-center justify-center"
           >
-            <FaPaypal />
-            {`ayPal £${totalPrice}`}
-          </Link>
+            {`Checkout £${totalPrice}`}
+          </button>
         )}
       </div>
     </div>
