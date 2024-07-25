@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import Item from "./Item";
-import Arrow from "./Arrow";
+import Item from "../components/Item";
+import Arrow from "../components/Arrow";
 import { fetchNecklaces } from "../services/api";
 
 const Necklaces = () => {

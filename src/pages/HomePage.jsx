@@ -1,9 +1,9 @@
 import React from "react";
-import Footer from "./Footer";
-import Earrings from "./Earrings";
-import Rings from "./Rings";
-import Necklaces from "./Necklaces";
-import Bracelets from "./Bracelets";
+import Footer from "../components/Footer";
+import Earrings from "../containers/Earrings";
+import Rings from "../containers/Rings";
+import Necklaces from "../containers/Necklaces";
+import Bracelets from "../containers/Bracelets";
 
 const HomePage = () => {
   return (

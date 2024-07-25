@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { AuthContext } from "./AuthProvider.jsx";
-import { FavouritesContext } from "./FavouritesContext.jsx";
-import { ShoppingBagContext } from "./ShoppingBagContext.jsx";
+import { FavouritesContext } from "../contexts/FavouritesContext.jsx";
+import { ShoppingBagContext } from "../contexts/ShoppingBagContext.jsx";
 import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Search } from "./Search.jsx";
 
@@ -215,7 +215,11 @@ const Navbar = () => {
           </div>
           <div className="flex-grow flex justify-end">
             <button className="px-4 py-2 rounded-full" onClick={toggleSearch}>
-              {buttonText === "Search" ? <FaSearch className="text-gray-700" /> : <p className="text-gray-700">Cancel</p>}
+              {buttonText === "Search" ? (
+                <FaSearch className="text-gray-700" />
+              ) : (
+                <p className="text-gray-700">Cancel</p>
+              )}
             </button>
           </div>
         </div>
