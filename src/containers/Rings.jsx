@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import Item from "./Item";
-import Arrow from "./Arrow";
-import { fetchEarrings } from "../services/api";
+import Item from "../components/Item";
+import Arrow from "../components/Arrow";
+import { fetchRings } from "../services/api";
 
-const Earrings = () => {
+const Rings = () => {
   const [items, setItems] = useState([]);
   const scrollContainerRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const earrings = await fetchEarrings();
+        const earrings = await fetchRings();
         setItems(earrings || []);
       } catch (error) {
-        console.error("Error fetching earrings:", error);
+        console.error("Error fetching rings:", error);
         setItems([]);
       }
     };
@@ -36,7 +36,7 @@ const Earrings = () => {
 
   return (
     <div className="relative bg-gray-100 p-4 shadow-md rounded-lg">
-      <h2 className="text-2xl font-semibold mb-4">Earrings</h2>
+      <h2 className="text-2xl font-semibold mb-4">Rings</h2>
       <div className="relative">
         <Arrow direction="left" onClick={() => scroll("left")} />
         <div
@@ -59,4 +59,4 @@ const Earrings = () => {
   );
 };
 
-export default Earrings;
+export default Rings;

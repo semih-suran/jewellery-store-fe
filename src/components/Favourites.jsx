@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { FavouritesContext } from "./FavouritesContext";
-import { ShoppingBagContext } from "./ShoppingBagContext";
+import { FavouritesContext } from "../contexts/FavouritesContext";
+import { ShoppingBagContext } from "../contexts/ShoppingBagContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaHeartBroken, FaCartPlus } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { ShoppingBagContext } from "./ShoppingBagContext";
+import { ShoppingBagContext } from "../contexts/ShoppingBagContext";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 

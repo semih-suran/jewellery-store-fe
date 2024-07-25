@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import PayPalCheckoutButton from "./PayPalCheckoutButton";
+import PayPalCheckoutButton from "./CheckoutButtonPayPal";
 
 const CheckoutPage = () => {
   const location = useLocation();

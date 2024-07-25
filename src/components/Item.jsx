@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingBagContext } from "./ShoppingBagContext";
-import { FavouritesContext } from "./FavouritesContext";
+import { ShoppingBagContext } from "../contexts/ShoppingBagContext";
+import { FavouritesContext } from "../contexts/FavouritesContext";
 import { FaHeart, FaRegHeart, FaCartPlus } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion, useAnimation } from "framer-motion";
@@ -25,7 +25,7 @@ const Item = ({ id, name, images_url, price }) => {
   };
 
   const handleAddToBag = () => {
-    addToBag({ item_id: id, name, images_url, price, quantity });
+    addToBag({ item_id: id, name, images_url, price }, quantity);
     setIsAdded(true);
     controls.start({ scale: 1.2, transition: { duration: 0.1 } }).then(() => {
       controls.start({ scale: 1, transition: { duration: 0.1 } });

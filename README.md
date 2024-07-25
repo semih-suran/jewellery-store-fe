@@ -24,7 +24,6 @@ Check out the Endpoints of the Jewellery Store: [Jewellery Store Endpoints](http
 - Tailwind CSS
 - OAuth2.0
 
-
 ## Authentication
 
 - OAuth 2.0: Utilized for authentication, providing secure access to the application using OAuth 2.0 protocol.
@@ -51,6 +50,11 @@ To get started with this project, follow these steps:
    - cd jewellery-store
    - npm install
    - create .env files
+     \*REACT_APP_GOOGLE_CLIENT_ID=,
+     REACT_APP_BASE_URL=,
+     REACT_APP_ALGOLIA_APP_ID=,
+     REACT_APP_ALGOLIA_API_KEY=,
+     REACT_APP_PAYPAL_CLIENT_ID=,
 
 3. Start the development server:
 
