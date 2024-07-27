@@ -25,7 +25,7 @@ const Item = ({ id, name, images_url, price }) => {
   };
 
   const handleAddToBag = () => {
-    addToBag({ item_id: id, name, images_url, price }, quantity);
+    addToBag({ item_id: id, name, images_url, price, quantity });
     setIsAdded(true);
     controls.start({ scale: 1.2, transition: { duration: 0.1 } }).then(() => {
       controls.start({ scale: 1, transition: { duration: 0.1 } });
@@ -48,7 +48,7 @@ const Item = ({ id, name, images_url, price }) => {
   return (
     <div className="w-full max-w-xs bg-white p-4 rounded-lg shadow-md flex-shrink-0">
       <img
-        src={images_url[0]}
+        src={images_url}
         alt={name}
         className="w-full h-48 object-contain rounded-lg cursor-pointer"
         onClick={handleNavigate}
@@ -67,7 +67,7 @@ const Item = ({ id, name, images_url, price }) => {
               name="quantity"
               min="1"
               value={quantity}
-              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
               className="w-16 p-2 border rounded"
             />
           </div>

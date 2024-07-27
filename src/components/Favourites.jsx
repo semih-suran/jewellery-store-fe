@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FavouritesContext } from "../contexts/FavouritesContext";
 import { ShoppingBagContext } from "../contexts/ShoppingBagContext";
@@ -12,6 +12,17 @@ function Favourites() {
   const [isAdded, setIsAdded] = useState({});
   const [quantities, setQuantities] = useState({});
 
+  useEffect(() => {
+    const newQuantities = {};
+    const newIsAdded = {};
+    favourites.forEach((item) => {
+      newQuantities[item.item_id] = 1;
+      newIsAdded[item.item_id] = false;
+    });
+    setQuantities(newQuantities);
+    setIsAdded(newIsAdded);
+  }, [favourites]);
+
   const handleQuantityChange = (item_id, quantity) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -23,7 +34,7 @@ function Favourites() {
     const quantity = quantities[item.item_id] || 1;
     setIsAdded((prev) => ({ ...prev, [item.item_id]: true }));
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    addToBag(item, quantity);
+    addToBag({ ...item, quantity });
     removeFromFavourites(item);
     setIsAdded((prev) => ({ ...prev, [item.item_id]: false }));
   };
@@ -44,9 +55,9 @@ function Favourites() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             <AnimatePresence>
-              {favourites.map((item, index) => (
+              {favourites.map((item) => (
                 <motion.div
-                  key={index}
+                  key={item.item_id}
                   initial={{ opacity: 1 }}
                   animate={{
                     opacity: isAdded[item.item_id] === "removing" ? 0 : 1,
@@ -70,7 +81,6 @@ function Favourites() {
                     <label htmlFor="quantity" className="mr-2 text-gray-800">
                       Qty:
                     </label>
-
                     <input
                       type="number"
                       value={quantities[item.item_id] || 1}
