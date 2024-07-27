@@ -130,7 +130,7 @@ const ProductDetails = () => {
                 name="quantity"
                 min="1"
                 value={quantity}
-                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                 className="w-12 p-1 border rounded"
               />
               <motion.button
