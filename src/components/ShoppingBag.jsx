@@ -48,7 +48,7 @@ function ShoppingBag() {
                   animate={{ opacity: isRemoving[item.item_id] ? 0 : 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="relative flex flex-col items-center justify-between p-4 bg-white shadow-md rounded-lg transform transition-transform duration-200 hover:scale-105 max-w-600px"
+                  className="relative flex flex-col items-center justify-between p-4 bg-white shadow-md rounded-lg max-w-600px"
                   onClick={() => navigate(`/product/${item.item_id}`)}
                 >
                   <div className="flex items-center w-full">
