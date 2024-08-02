@@ -11,7 +11,7 @@ import { useSwipeable } from "react-swipeable";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState(1);
+  const quantity = 1;
   const { addToBag } = useContext(ShoppingBagContext);
   const { favourites, addToFavourites, removeFromFavourites } =
     useContext(FavouritesContext);
@@ -121,18 +121,6 @@ const ProductDetails = () => {
               £{product.price}
             </p>
             <div className="flex items-center mb-4">
-              <label htmlFor="quantity" className="mr-2 text-gray-800">
-                Quantity:
-              </label>
-              <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                min="1"
-                value={quantity}
-                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                className="w-12 p-1 border rounded"
-              />
               <motion.button
                 onClick={handleAddToBag}
                 className="mx-4 text-white rounded"
