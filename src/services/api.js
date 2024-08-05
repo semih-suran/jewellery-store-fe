@@ -2,8 +2,8 @@ import axios from "axios";
 import React from "react";
 import { motion } from "framer-motion";
 
-const BASE_URL = "http://localhost:9090/api";
-// const BASE_URL = process.env.REACT_APP_BASE_URL;
+// const BASE_URL = "http://localhost:9090/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchAllItems = async () => {
   try {
