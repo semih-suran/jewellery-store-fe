@@ -1,14 +1,15 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { googleLogout } from "@react-oauth/google";
 import { AuthContext } from "./AuthProvider.jsx";
 import { FavouritesContext } from "../contexts/FavouritesContext.jsx";
 import { ShoppingBagContext } from "../contexts/ShoppingBagContext.jsx";
 import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Search } from "./Search.jsx";
+import Modal from "./Modal";
 
 const Navbar = () => {
-  const { user, login, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const { favourites } = useContext(FavouritesContext);
   const { bagItems } = useContext(ShoppingBagContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [buttonText, setButtonText] = useState("Search");
+  const [showModal, setShowModal] = useState(false);
 
   const dropdownRef = useRef(null);
 
@@ -143,12 +145,12 @@ const Navbar = () => {
 
             {user ? (
               <div className="relative" ref={dropdownRef}>
-                <img
-                  src={user.picture}
-                  alt="user avatar"
-                  className="w-12 h-12 rounded-full cursor-pointer"
+                <div
+                  className="cursor-pointer text-gray-700 hover:text-gray-900 font-medium"
                   onClick={toggleDropdown}
-                />
+                >
+                  Welcome {user.nickname}!
+                </div>
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg py-1">
                     <Link
@@ -171,14 +173,12 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <GoogleLogin
-                onSuccess={login}
-                onError={() => console.log("Login Failed")}
-                useOneTap
-                theme="outline"
-                shape="circle"
-                size="small"
-              />
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => setShowModal(true)}
+              >
+                Login/Signup
+              </button>
             )}
           </div>
         </div>
@@ -229,6 +229,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
+      <Modal showModal={showModal} setShowModal={setShowModal} />
     </nav>
   );
 };

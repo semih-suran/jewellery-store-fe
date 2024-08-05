@@ -2,7 +2,8 @@ import axios from "axios";
 import React from "react";
 import { motion } from "framer-motion";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = "http://localhost:9090/api";
+// const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchAllItems = async () => {
   try {
@@ -11,6 +12,36 @@ export const fetchAllItems = async () => {
   } catch (error) {
     console.error("Error fetching all items:", error);
     return [];
+  }
+};
+
+export const registerUser = async (userData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/register`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("Error registering user:", error);
+    throw error;
+  }
+};
+
+export const loginUser = async (credentials) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/login`, credentials);
+    return response;
+  } catch (error) {
+    console.error("Error in loginUser:", error);
+    throw error;
+  }
+};
+
+export const googleLoginUser = async (tokenId) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/google-login`, { tokenId });
+    return response;
+  } catch (error) {
+    console.error("Error in googleLoginUser:", error);
+    throw error;
   }
 };
 

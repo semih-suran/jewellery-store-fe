@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { loginUser, googleLoginUser } from "../services/api";
 
 export const AuthContext = createContext();
 
@@ -15,7 +16,7 @@ const AuthProvider = ({ children }) => {
           setUser({
             name: decodedUser.name,
             email: decodedUser.email,
-            picture: decodedUser.picture,
+            nickname: decodedUser.nickname,
           });
         } else {
           localStorage.removeItem("token");
@@ -27,21 +28,62 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (response) => {
+  const regularLogin = async (email, password) => {
     try {
-      const token = response.credential;
-      if (token.split(".").length !== 3) {
-        throw new Error("Invalid token format");
+      const response = await loginUser({ email, password });
+      console.log("Backend response:", response);
+
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        const decodedUser = jwtDecode(token);
+        setUser({
+          name: decodedUser.name,
+          email: decodedUser.email,
+          picture: decodedUser.picture || null,
+          nickname: decodedUser.nickname,
+        });
+        return true;
+      } else {
+        throw new Error("No token received from backend");
       }
-      localStorage.setItem("token", token);
-      const decodedUser = jwtDecode(token);
-      setUser({
-        name: decodedUser.name,
-        email: decodedUser.email,
-        picture: decodedUser.picture,
-      });
     } catch (error) {
-      console.error("Login failed:", error);
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : error.message ||
+            "Login failed. Please check your credentials and try again.";
+      console.error("Login failed:", errorMessage);
+      alert(errorMessage);
+      return false;
+    }
+  };
+
+  const googleLogin = async (tokenId) => {
+    try {
+      const response = await googleLoginUser({ tokenId });
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        const decodedUser = jwtDecode(token);        
+        setUser({
+          name: decodedUser.name,
+          email: decodedUser.email,
+          picture: decodedUser.picture || null,
+          nickname: decodedUser.nickname,
+        });
+        return true;
+      } else {
+        throw new Error("No token received from backend");
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : error.message || "Google login failed. Please try again.";
+      console.error("Google login failed:", errorMessage);
+      alert(errorMessage);
+      return false;
     }
   };
 
@@ -51,7 +93,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, regularLogin, googleLogin, logout }}>
       {children}
     </AuthContext.Provider>
   );
