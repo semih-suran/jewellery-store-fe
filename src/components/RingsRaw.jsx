@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Item from "./Item";
 import Footer from "./Footer";
-import { fetchRings } from "../services/api";
+import { fetchItemsByType } from "../services/api";
 import { motion, AnimatePresence } from "framer-motion";
 
 const RingsRaw = () => {
@@ -10,7 +10,7 @@ const RingsRaw = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const rings = await fetchRings();
+        const rings = await fetchItemsByType("ring");
         setItems(rings || []);
       } catch (error) {
         console.error("Error fetching articles:", error);

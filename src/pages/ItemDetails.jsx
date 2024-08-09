@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchProductById } from "../services/api";
 import { ShoppingBagContext } from "../contexts/ShoppingBagContext";
 import { FavouritesContext } from "../contexts/FavouritesContext";
-import { FaHeart, FaRegHeart, FaCartPlus } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaCartPlus, FaStar } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion, useAnimation } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
@@ -13,12 +13,9 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const quantity = 1;
   const { addToBag } = useContext(ShoppingBagContext);
-  const { favourites, addToFavourites, removeFromFavourites } =
-    useContext(FavouritesContext);
+  const { favourites, addToFavourites, removeFromFavourites } = useContext(FavouritesContext);
   const [isAdded, setIsAdded] = useState(false);
-  const isFavourite = favourites.some(
-    (item) => item.item_id === product?.item_id
-  );
+  const isFavourite = favourites.some((item) => item.item_id === product?.item_id);
   const controls = useAnimation();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -61,15 +58,11 @@ const ProductDetails = () => {
   }, [isAdded]);
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === product.images_url.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentImageIndex((prevIndex) => prevIndex === product.images_url.length - 1 ? 0 : prevIndex + 1);
   };
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? product.images_url.length - 1 : prevIndex - 1
-    );
+    setCurrentImageIndex((prevIndex) => prevIndex === 0 ? product.images_url.length - 1 : prevIndex - 1);
   };
 
   const swipeHandlers = useSwipeable({
@@ -82,6 +75,8 @@ const ProductDetails = () => {
   if (!product) {
     return <p>Loading...</p>;
   }
+
+  const formattedReviewScore = product.review_score === "0.00" ? "No Reviews Yet" : parseFloat(product.review_score).toFixed(1);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-32">
@@ -101,31 +96,19 @@ const ProductDetails = () => {
             />
             {product.images_url.length > 1 && (
               <div className="absolute top-1/2 w-full flex justify-between transform -translate-y-1/2">
-                <button
-                  onClick={handlePrevImage}
-                  className="bg-gray-700 text-white p-2 rounded-l"
-                >
-                  {"<"}
-                </button>
-                <button
-                  onClick={handleNextImage}
-                  className="bg-gray-700 text-white p-2 rounded-r"
-                >
-                  {">"}
-                </button>
+                <button onClick={handlePrevImage} className="bg-gray-700 text-white p-2 rounded-l">{"<"}</button>
+                <button onClick={handleNextImage} className="bg-gray-700 text-white p-2 rounded-r">{">"}</button>
               </div>
             )}
           </div>
           <div className="w-full md:w-1/2 p-8">
-            <p className="text-2xl font-bold text-gray-800 mb-4">
-              £{product.price}
-            </p>
+            <p className="text-2xl font-bold text-gray-800 mb-4">£{product.price}</p>
             <div className="flex items-center mb-4">
-              <motion.button
-                onClick={handleAddToBag}
-                className="mx-4 text-white rounded"
-                animate={controls}
-              >
+              <div className="flex items-center mr-4">
+                <FaStar className="text-yellow-500" />
+                <p className="ml-1">{formattedReviewScore}</p>
+              </div>
+              <motion.button onClick={handleAddToBag} className="mx-4 text-white rounded" animate={controls}>
                 {isAdded ? (
                   <BsFillCartCheckFill className="w-6 h-6 text-green-500 hover:text-green-700" />
                 ) : (
@@ -144,9 +127,7 @@ const ProductDetails = () => {
             <p className="text-xl text-gray-800 mb-4">Type: {product.type}</p>
             <p className="text-xl text-gray-800 mb-4">Style: {product.style}</p>
             <p className="text-xl text-gray-800 mb-4">Size: {product.size}</p>
-            <p className="text-xl text-gray-800 mb-4">
-              Color: {product.color1}, {product.color2}
-            </p>
+            <p className="text-xl text-gray-800 mb-4">Color: {product.color1}, {product.color2}</p>
           </div>
         </div>
       </main>

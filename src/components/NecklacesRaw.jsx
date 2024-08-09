@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Item from "./Item";
 import Footer from "./Footer";
-import { fetchNecklaces } from "../services/api";
+import { fetchItemsByType } from "../services/api";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NecklacesRaw = () => {
@@ -10,7 +10,7 @@ const NecklacesRaw = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const necklaces = await fetchNecklaces();
+        const necklaces = await fetchItemsByType("necklace");
         setItems(necklaces || []);
       } catch (error) {
         console.error("Error fetching necklaces:", error);

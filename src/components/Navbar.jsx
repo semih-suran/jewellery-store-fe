@@ -1,12 +1,27 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  lazy,
+  Suspense,
+} from "react";
 import { Link } from "react-router-dom";
 import { googleLogout } from "@react-oauth/google";
 import { AuthContext } from "./AuthProvider.jsx";
 import { FavouritesContext } from "../contexts/FavouritesContext.jsx";
 import { ShoppingBagContext } from "../contexts/ShoppingBagContext.jsx";
-import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
-import { Search } from "./Search.jsx";
+import {
+  FaHeart,
+  FaShoppingCart,
+  FaSearch,
+  FaWindowClose,
+} from "react-icons/fa";
 import Modal from "./Modal";
+
+const Search = lazy(() =>
+  import("./Search").then((module) => ({ default: module.Search }))
+);
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -16,7 +31,6 @@ const Navbar = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [buttonText, setButtonText] = useState("Search");
   const [showModal, setShowModal] = useState(false);
 
   const dropdownRef = useRef(null);
@@ -61,12 +75,10 @@ const Navbar = () => {
 
   const toggleSearch = () => {
     setSearchOpen(!searchOpen);
-    setButtonText(searchOpen ? "Search" : "Cancel");
   };
 
   const closeSearch = () => {
     setSearchOpen(false);
-    setButtonText("Search");
   };
 
   const renderMenuItems = (className) => (
@@ -146,10 +158,14 @@ const Navbar = () => {
             {user ? (
               <div className="relative" ref={dropdownRef}>
                 <div
-                  className="cursor-pointer text-gray-700 hover:text-gray-900 font-medium"
+                  className="cursor-pointer flex items-center space-x-2"
                   onClick={toggleDropdown}
                 >
-                  Welcome {user.nickname}!
+                  <img
+                    src={user.picture}
+                    alt={`${user.nickname}'s avatar`}
+                    className="w-8 h-8 rounded-full"
+                  />
                 </div>
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg py-1">
@@ -177,7 +193,7 @@ const Navbar = () => {
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 onClick={() => setShowModal(true)}
               >
-                Login/Signup
+                Login
               </button>
             )}
           </div>
@@ -215,18 +231,21 @@ const Navbar = () => {
           </div>
           <div className="flex-grow flex justify-end">
             <button className="px-4 py-2 rounded-full" onClick={toggleSearch}>
-              {buttonText === "Search" ? (
-                <FaSearch className="text-gray-700" />
+              {searchOpen ? (
+                <FaWindowClose className="text-gray-700" />
               ) : (
-                <p className="text-gray-700">Cancel</p>
+                <FaSearch className="text-gray-700" />
               )}
             </button>
           </div>
         </div>
+
         {searchOpen && (
-          <div className="mt-4">
-            <Search onSearchClose={closeSearch} />
-          </div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <div className="mt-4">
+              <Search onSearchClose={closeSearch} />
+            </div>
+          </Suspense>
         )}
       </div>
       <Modal showModal={showModal} setShowModal={setShowModal} />
