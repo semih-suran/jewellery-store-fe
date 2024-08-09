@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { ShoppingBagContext } from "../contexts/ShoppingBagContext";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { calculateTotalPrice, formatPrice } from "../utils/priceUtils";
 
 function ShoppingBag() {
   const { bagItems, removeFromBag, clearBag, updateQuantity } =
@@ -10,21 +11,13 @@ function ShoppingBag() {
   const [isRemoving, setIsRemoving] = useState({});
   const navigate = useNavigate();
 
-  const calculateTotalPrice = () => {
-    return bagItems
-      .reduce((total, item) => {
-        const priceNumber = parseFloat(item.price.replace("£", ""));
-        return total + priceNumber * item.quantity;
-      }, 0)
-      .toFixed(2);
-  };
-
-  const totalPrice = calculateTotalPrice();
+  const totalPrice = calculateTotalPrice(bagItems);
 
   const handleRemoveFromBag = (item) => {
     setIsRemoving((prev) => ({ ...prev, [item.item_id]: true }));
     setTimeout(() => {
       removeFromBag(item.item_id);
+      removeFromBag(item.the_item_id);
     }, 500);
   };
 
@@ -96,9 +89,7 @@ function ShoppingBag() {
                     </div>
                     <p className="font-semibold text-gray-700">
                       Total Price: £
-                      {(
-                        parseFloat(item.price.replace("£", "")) * item.quantity
-                      ).toFixed(2)}
+                      {(formatPrice(item.price) * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </motion.div>

@@ -3,6 +3,15 @@ import { GoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "./AuthProvider";
 import { registerUser } from "../services/api";
 
+const avatars = [
+  "https://www.shareicon.net/data/128x128/2016/05/24/770107_man_512x512.png",
+  "https://www.shareicon.net/data/128x128/2016/05/24/770091_people_512x512.png",
+  "https://www.shareicon.net/data/128x128/2016/05/24/770088_people_512x512.png",
+  "https://www.shareicon.net/data/128x128/2016/05/24/770101_man_512x512.png",
+  "https://www.shareicon.net/data/128x128/2016/05/24/770108_people_512x512.png",
+  "https://www.shareicon.net/data/128x128/2016/05/24/770097_people_512x512.png",
+];
+
 const Modal = ({ showModal, setShowModal }) => {
   const { regularLogin, googleLogin } = useContext(AuthContext);
   const [isSignup, setIsSignup] = useState(false);
@@ -11,10 +20,15 @@ const Modal = ({ showModal, setShowModal }) => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (isSignup) {
+      if (!selectedAvatar) {
+        alert("Please select an avatar.");
+        return;
+      }
       try {
         const userData = {
           first_name: firstName,
@@ -22,6 +36,7 @@ const Modal = ({ showModal, setShowModal }) => {
           nickname,
           email,
           password,
+          avatar: selectedAvatar,
         };
         await registerUser(userData);
         alert("Registration successful! Please log in.");
@@ -44,7 +59,7 @@ const Modal = ({ showModal, setShowModal }) => {
 
   const handleGoogleLoginSuccess = async (response) => {
     try {
-      const success = await googleLogin(response.credential);
+      const success = await googleLogin({ tokenId: response.credential });
       if (success) {
         setShowModal(false);
       } else {
@@ -79,6 +94,27 @@ const Modal = ({ showModal, setShowModal }) => {
                 <form onSubmit={handleSubmit}>
                   {isSignup && (
                     <>
+                      <div className="mb-4">
+                        <label className="block mb-2 text-sm font-bold text-gray-700">
+                          Choose an Avatar
+                        </label>
+                        <div className="flex space-x-4">
+                          {avatars.map((avatar) => (
+                            <img
+                              key={avatar}
+                              src={avatar}
+                              alt="avatar"
+                              className={`w-12 h-12 cursor-pointer rounded-full ${
+                                selectedAvatar === avatar
+                                  ? "border-4 border-blue-500"
+                                  : ""
+                              }`}
+                              onClick={() => setSelectedAvatar(avatar)}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
                       <div className="mb-4">
                         <label
                           className="block mb-2 text-sm font-bold text-gray-700"

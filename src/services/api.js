@@ -16,8 +16,21 @@ export const fetchAllItems = async () => {
 };
 
 export const registerUser = async (userData) => {
-  try {
-    const response = await axios.post(`${BASE_URL}/register`, userData);
+    try {
+    const response = await axios.post(`${BASE_URL}/shoppingusers`, {
+      firstName: userData.first_name,
+      lastName: userData.last_name,
+      nickname: userData.nickname,
+      email: userData.email,
+      password: userData.password,
+      picture: userData.avatar,
+      mobilePhone: userData.mobile_phone,
+      street: userData.street,
+      city: userData.city,
+      state: userData.state,
+      zipCode: userData.zipcode,
+      country: userData.country,
+    });
     return response.data;
   } catch (error) {
     console.error("Error registering user:", error);
@@ -63,42 +76,12 @@ fetch(`${BASE_URL}/items`)
     console.error(error);
   });
 
-export const fetchBracelets = async () => {
+export const fetchItemsByType = async (type) => {
   try {
-    const response = await axios.get(`${BASE_URL}/items/type/bracelet`);
+    const response = await axios.get(`${BASE_URL}/items/type/${type}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching all bracelets:", error);
-    return [];
-  }
-};
-
-export const fetchEarrings = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/items/type/earring`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching all earrings:", error);
-    return [];
-  }
-};
-
-export const fetchRings = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/items/type/ring`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching all rings:", error);
-    return [];
-  }
-};
-
-export const fetchNecklaces = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/items/type/necklace`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching all necklaces:", error);
+    console.error(`Error fetching items of type ${type}:`, error);
     return [];
   }
 };
@@ -110,6 +93,77 @@ export const fetchProductById = async (productId) => {
   } catch (error) {
     console.error(`Error fetching product by ID ${productId}:`, error);
     return null;
+  }
+};
+
+export const fetchUserBag = async (userId) => {  
+  try {
+    const response = await axios.get(`${BASE_URL}/shoppingbag/${userId}`);    
+    return response.data.items;
+  } catch (error) {
+    console.error(`Error fetching bag for user ${userId}:`, error);
+    throw error;
+  }
+};
+
+export const addUserBagItem = async (userId, itemId, quantity) => {  
+  try {
+    const response = await axios.post(`${BASE_URL}/shoppingbag`, {
+      user_id: userId,
+      item_id: itemId,
+      quantity: quantity,
+    });
+
+    return response.data.item;
+  } catch (error) {
+    console.error(`Error adding item to bag for user ${userId}:`, error);
+    throw error;
+  }
+};
+
+export const removeUserBagItem = async (userId, itemId) => {
+  try {
+    await axios.delete(`${BASE_URL}/shoppingbag/${userId}/${itemId}`);
+  } catch (error) {
+    console.error(`Error removing item from bag for user ${userId}:`, error);
+    throw error;
+  }
+};
+
+export const fetchUserFavourites = async (userId) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/shoppingfavourites/${userId}`
+    );
+    return response.data.favourites;
+  } catch (error) {
+    console.error(`Error fetching favourites for user ${userId}:`, error);
+    throw error;
+  }
+};
+
+export const addUserFavouriteItem = async (userId, itemId) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/shoppingfavourites`, {
+      user_id: userId,
+      item_id: itemId,
+    });
+    return response.data.favourite;
+  } catch (error) {
+    console.error(`Error adding item to favourites for user ${userId}:`, error);
+    throw error;
+  }
+};
+
+export const removeUserFavouriteItem = async (userId, itemId) => {
+  try {
+    await axios.delete(`${BASE_URL}/shoppingfavourites/${userId}/${itemId}`);
+  } catch (error) {
+    console.error(
+      `Error removing item from favourites for user ${userId}:`,
+      error
+    );
+    throw error;
   }
 };
 

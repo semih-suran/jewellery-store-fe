@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Item from "../components/Item";
 import Arrow from "../components/Arrow";
-import { fetchNecklaces } from "../services/api";
+import { fetchItemsByType } from "../services/api";
 
 const Necklaces = () => {
   const [items, setItems] = useState([]);
@@ -10,7 +10,7 @@ const Necklaces = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const necklaces = await fetchNecklaces();
+        const necklaces = await fetchItemsByType("necklace");
         setItems(necklaces || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
