@@ -15,9 +15,9 @@ function ShoppingBag() {
 
   const handleRemoveFromBag = (item) => {
     setIsRemoving((prev) => ({ ...prev, [item.item_id]: true }));
+
     setTimeout(() => {
       removeFromBag(item.item_id);
-      removeFromBag(item.the_item_id);
     }, 500);
   };
 
@@ -37,9 +37,12 @@ function ShoppingBag() {
               {bagItems.map((item) => (
                 <motion.div
                   key={item.item_id}
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: isRemoving[item.item_id] ? 0 : 1 }}
-                  exit={{ opacity: 0 }}
+                  initial={{ opacity: 1, scale: 1 }}
+                  animate={{
+                    opacity: isRemoving[item.item_id] ? 0 : 1,
+                    scale: isRemoving[item.item_id] ? 0.95 : 1,
+                  }}
+                  exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.5 }}
                   className="relative flex flex-col items-center justify-between p-4 bg-white shadow-md rounded-lg max-w-600px"
                   onClick={() => navigate(`/product/${item.item_id}`)}
