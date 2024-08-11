@@ -16,7 +16,7 @@ export const fetchAllItems = async () => {
 };
 
 export const registerUser = async (userData) => {
-    try {
+  try {
     const response = await axios.post(`${BASE_URL}/shoppingusers`, {
       firstName: userData.first_name,
       lastName: userData.last_name,
@@ -96,9 +96,9 @@ export const fetchProductById = async (productId) => {
   }
 };
 
-export const fetchUserBag = async (userId) => {  
+export const fetchUserBag = async (userId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/shoppingbag/${userId}`);    
+    const response = await axios.get(`${BASE_URL}/shoppingbag/${userId}`);
     return response.data.items;
   } catch (error) {
     console.error(`Error fetching bag for user ${userId}:`, error);
@@ -106,7 +106,7 @@ export const fetchUserBag = async (userId) => {
   }
 };
 
-export const addUserBagItem = async (userId, itemId, quantity) => {  
+export const addUserBagItem = async (userId, itemId, quantity) => {
   try {
     const response = await axios.post(`${BASE_URL}/shoppingbag`, {
       user_id: userId,
