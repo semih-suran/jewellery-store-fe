@@ -45,7 +45,7 @@ function ShoppingBag() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.5 }}
                   className="relative flex flex-col items-center justify-between p-4 bg-white shadow-md rounded-lg max-w-600px"
-                  onClick={() => navigate(`/product/${item.item_id}`)}
+                  onClick={() => navigate(`/product/j${item.the_item_id}`)}
                 >
                   <div className="flex items-center w-full">
                     <img
