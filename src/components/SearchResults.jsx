@@ -9,6 +9,7 @@ import {
 } from "react-instantsearch";
 import { useLocation } from "react-router-dom";
 import { Hit } from "./Hit";
+import Footer from "./Footer";
 
 const searchClient = algoliasearch(
   "L7WYB1CCJE",
@@ -20,17 +21,20 @@ const SearchResults = () => {
   const query = new URLSearchParams(location.search).get("query");
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Search Results</h1>
-      <InstantSearch
-        searchClient={searchClient}
-        future={{ preserveSharedStateOnUnmount: true }}
-        indexName="jewellery-store"
-      >
-        <Configure hitsPerPage={6} query={query} />
-        <Hits hitComponent={HitComponent} />
-        <Pagination />
-      </InstantSearch>
+    <div className="min-h-screen bg-gray-100 flex flex-col pt-32">
+      <main className="flex-grow flex flex-col items-center p-8">
+        <h1 className="text-3xl font-bold text-gray-800 pb-4">Search Results</h1>
+        <InstantSearch
+          searchClient={searchClient}
+          future={{ preserveSharedStateOnUnmount: true }}
+          indexName="jewellery-store"
+        >
+          <Configure hitsPerPage={6} query={query} />
+          <Hits hitComponent={HitComponent} />
+          <Pagination />
+        </InstantSearch>
+      </main>
+      <Footer />
     </div>
   );
 };

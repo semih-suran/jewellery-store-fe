@@ -28,25 +28,36 @@ const Item = ({ id }) => {
   const navigate = useNavigate();
 
   const toggleFavourite = async () => {
+    if (!item || !item.the_item_id) {
+      console.error("Item or item_id is missing");
+      return;
+    }
+
     if (user) {
       if (isFavourite) {
-        await removeUserFavouriteItem(user.id, id);
-        removeFromFavourites({ item_id: id });
+        try {
+          await removeUserFavouriteItem(user.user_id, item.the_item_id);
+          removeFromFavourites(item.the_item_id);
+        } catch (error) {
+          console.error("Error removing favourite:", error);
+        }
       } else {
-        await addUserFavouriteItem(user.id, id);
-        addToFavourites({
-          item_id: id,
-          name: item.name,
-          images_url: item.images_url,
-          price: item.price,
-        });
+        try {
+          await addUserFavouriteItem(user.user_id, item.the_item_id);
+          addToFavourites({
+            user_id: user.user_id,
+            item_id: item.the_item_id,
+          });
+        } catch (error) {
+          console.error("Error adding favourite:", error);
+        }
       }
     } else {
       if (isFavourite) {
-        removeFromFavourites({ item_id: id });
+        removeFromFavourites(item.the_item_id);
       } else {
         addToFavourites({
-          item_id: id,
+          item_id: item.the_item_id,
           name: item.name,
           images_url: item.images_url,
           price: item.price,

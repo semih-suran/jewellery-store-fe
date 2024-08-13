@@ -16,6 +16,7 @@ import {
   FaShoppingCart,
   FaSearch,
   FaWindowClose,
+  FaUser,
 } from "react-icons/fa";
 import Modal from "./Modal";
 
@@ -190,10 +191,10 @@ const Navbar = () => {
               </div>
             ) : (
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="text-gray-700 hover:text-gray-900 relative"
                 onClick={() => setShowModal(true)}
               >
-                Login
+                <FaUser className="w-6 h-6" />
               </button>
             )}
           </div>
