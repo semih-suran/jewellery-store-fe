@@ -14,10 +14,10 @@ function ShoppingBag() {
   const totalPrice = calculateTotalPrice(bagItems);
 
   const handleRemoveFromBag = (item) => {
-    setIsRemoving((prev) => ({ ...prev, [item.item_id]: true }));
+    setIsRemoving((prev) => ({ ...prev, [item.the_item_id]: true }));
 
     setTimeout(() => {
-      removeFromBag(item.item_id);
+      removeFromBag(item.the_item_id);
     }, 500);
   };
 
@@ -39,8 +39,8 @@ function ShoppingBag() {
                   key={item.item_id}
                   initial={{ opacity: 1, scale: 1 }}
                   animate={{
-                    opacity: isRemoving[item.item_id] ? 0 : 1,
-                    scale: isRemoving[item.item_id] ? 0.95 : 1,
+                    opacity: isRemoving[item.the_item_id] ? 0 : 1,
+                    scale: isRemoving[item.the_item_id] ? 0.95 : 1,
                   }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.5 }}

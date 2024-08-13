@@ -15,8 +15,6 @@ export const ShoppingBagProvider = ({ children }) => {
 
   useEffect(() => {
     const loadBagItems = async () => {
-      localStorage.removeItem("bagItems");
-
       if (user) {
         try {
           const userBagItems = await fetchUserBag(user.user_id);
@@ -76,12 +74,20 @@ export const ShoppingBagProvider = ({ children }) => {
       addUserBagItem(user.user_id, item.item_id, quantity).catch((error) => {
         console.error("Failed to update bag item in the backend:", error);
       });
+    } else {
+      const storedBagItems = JSON.parse(localStorage.getItem("bagItems")) || [];
+      const updatedBagItems = storedBagItems.map((bagItem) =>
+        bagItem.item_id === item.item_id
+          ? { ...bagItem, quantity: bagItem.quantity + quantity }
+          : bagItem
+      );
+      localStorage.setItem("bagItems", JSON.stringify(updatedBagItems));
     }
   };
 
   const removeFromBag = async (itemId) => {
     setBagItems((prevBagItems) =>
-      prevBagItems.filter((item) => item.item_id !== itemId)
+      prevBagItems.filter((item) => item.item_id !== `j` + itemId)
     );
 
     if (user) {
@@ -97,11 +103,20 @@ export const ShoppingBagProvider = ({ children }) => {
           return removedItem ? [...prevBagItems, removedItem] : prevBagItems;
         });
       }
+    } else {
+      const storedBagItems = JSON.parse(localStorage.getItem("bagItems")) || [];
+      const updatedBagItems = storedBagItems.filter(
+        (item) => item.item_id !== `j` + itemId
+      );
+      localStorage.setItem("bagItems", JSON.stringify(updatedBagItems));
     }
   };
 
   const clearBag = () => {
     setBagItems([]);
+    if (!user) {
+      localStorage.removeItem("bagItems");
+    }
   };
 
   const updateQuantity = (itemId, quantity) => {
@@ -111,6 +126,13 @@ export const ShoppingBagProvider = ({ children }) => {
         item.item_id === itemId ? { ...item, quantity } : item
       )
     );
+    if (!user) {
+      const storedBagItems = JSON.parse(localStorage.getItem("bagItems")) || [];
+      const updatedBagItems = storedBagItems.map((item) =>
+        item.item_id === itemId ? { ...item, quantity } : item
+      );
+      localStorage.setItem("bagItems", JSON.stringify(updatedBagItems));
+    }
   };
 
   return (
