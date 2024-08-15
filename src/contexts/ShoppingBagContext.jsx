@@ -112,13 +112,6 @@ export const ShoppingBagProvider = ({ children }) => {
     }
   };
 
-  const clearBag = () => {
-    setBagItems([]);
-    if (!user) {
-      localStorage.removeItem("bagItems");
-    }
-  };
-
   const updateQuantity = (itemId, quantity) => {
     if (quantity < 1) return;
     setBagItems((prevBagItems) =>
@@ -137,7 +130,7 @@ export const ShoppingBagProvider = ({ children }) => {
 
   return (
     <ShoppingBagContext.Provider
-      value={{ bagItems, addToBag, removeFromBag, clearBag, updateQuantity }}
+      value={{ bagItems, addToBag, removeFromBag, updateQuantity }}
     >
       {children}
     </ShoppingBagContext.Provider>

@@ -22,9 +22,9 @@ const Item = ({ id }) => {
   const [item, setItem] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isAddedToBag, setIsAddedToBag] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(false);
 
   const quantity = 0;
-  const isFavourite = favourites.some((favItem) => favItem.item_id === id);
   const navigate = useNavigate();
 
   const toggleFavourite = async () => {
@@ -33,6 +33,7 @@ const Item = ({ id }) => {
       return;
     }
 
+    setIsFavourite(!isFavourite);
     if (user) {
       if (isFavourite) {
         try {
@@ -40,6 +41,7 @@ const Item = ({ id }) => {
           removeFromFavourites(item.the_item_id);
         } catch (error) {
           console.error("Error removing favourite:", error);
+          setIsFavourite(true);
         }
       } else {
         try {
@@ -50,6 +52,7 @@ const Item = ({ id }) => {
           });
         } catch (error) {
           console.error("Error adding favourite:", error);
+          setIsFavourite(false);
         }
       }
     } else {
@@ -57,7 +60,7 @@ const Item = ({ id }) => {
         removeFromFavourites(item.the_item_id);
       } else {
         addToFavourites({
-          item_id: item.the_item_id,
+          item_id: item.item_id,
           name: item.name,
           images_url: item.images_url,
           price: item.price,
@@ -83,7 +86,7 @@ const Item = ({ id }) => {
       });
     } else {
       addToBag({
-        item_id: item.the_item_id,
+        item_id: item.item_id,
         name: item.name,
         images_url: item.images_url,
         price: item.price,
@@ -101,10 +104,10 @@ const Item = ({ id }) => {
     const fetchItemDetails = async () => {
       const fetchedItem = await fetchProductById(id);
       setItem(fetchedItem);
+      setIsFavourite(favourites.some((favItem) => favItem.item_id === id));
     };
-
     fetchItemDetails();
-  }, [id]);
+  }, [id, favourites]);
 
   if (!item) {
     return (

@@ -5,39 +5,47 @@ import { ShoppingBagContext } from "../contexts/ShoppingBagContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaHeartBroken, FaCartPlus } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Favourites() {
-  const { favourites, removeFromFavourites } = useContext(FavouritesContext);
+  const { favourites, removeFromFavourites, loading } =
+    useContext(FavouritesContext);
   const { addToBag } = useContext(ShoppingBagContext);
   const [isAdded, setIsAdded] = useState({});
-  const [quantities, setQuantities] = useState({});
-
-  useEffect(() => {
-    const newQuantities = {};
-    const newIsAdded = {};
-    favourites.forEach((item) => {
-      newQuantities[item.item_id] = 1;
-      newIsAdded[item.item_id] = false;
-    });
-    setQuantities(newQuantities);
-    setIsAdded(newIsAdded);
-  }, [favourites]);
 
   const handleAddToBag = async (item) => {
-    const quantity = quantities[item.item_id] || 1;
+    const quantity = 1;
     setIsAdded((prev) => ({ ...prev, [item.item_id]: true }));
     await new Promise((resolve) => setTimeout(resolve, 1000));
     addToBag({ ...item, quantity });
-    removeFromFavourites(item);
+    removeFromFavourites(item.the_item_id);
     setIsAdded((prev) => ({ ...prev, [item.item_id]: false }));
   };
 
   const handleRemoveFromFavourites = (item) => {
     setIsAdded((prev) => ({ ...prev, [item.item_id]: "removing" }));
     setTimeout(() => {
-      removeFromFavourites(item);
+      removeFromFavourites(item.the_item_id);
     }, 500);
   };
+
+  useEffect(() => {
+    if (!loading) {
+      const newIsAdded = {};
+      favourites.forEach((item) => {
+        newIsAdded[item.item_id] = false;
+      });
+      setIsAdded(newIsAdded);
+    }
+  }, [favourites, loading]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <ClipLoader size={50} color={"#123abc"} loading={loading} />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 p-8 pt-32">
@@ -61,7 +69,7 @@ function Favourites() {
                 >
                   <Link to={`/product/${item.item_id}`}>
                     <img
-                      src={item.images_url[0]}
+                      src={item.images_url}
                       alt={item.name}
                       className="w-full h-48 object-cover rounded-lg"
                     />
@@ -90,28 +98,18 @@ function Favourites() {
                         <FaCartPlus className="w-6 h-6 text-gray-500 hover:text-gray-700" />
                       )}
                     </motion.button>
-                    <motion.button
+                    <button
                       onClick={() => handleRemoveFromFavourites(item)}
-                      className="text-xs py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      initial={{ opacity: 1 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5 }}
+                      className="ml-2 focus:outline-none"
                     >
                       <FaHeartBroken className="w-6 h-6 text-red-500 hover:text-red-700" />
-                    </motion.button>
+                    </button>
                   </div>
                 </motion.div>
               ))}
             </AnimatePresence>
           </div>
         )}
-        <Link
-          to="/"
-          className="mt-4 py-2 px-4 rounded-md bg-blue-500 text-white hover:bg-blue-700 focus:outline-none"
-        >
-          Continue Shopping
-        </Link>
       </div>
     </div>
   );

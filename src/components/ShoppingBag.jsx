@@ -1,12 +1,18 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ShoppingBagContext } from "../contexts/ShoppingBagContext";
-import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
+import {
+  FaTrash,
+  FaMinus,
+  FaPlus,
+  FaShoppingCart,
+  FaCcPaypal,
+} from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { calculateTotalPrice, formatPrice } from "../utils/priceUtils";
 
 function ShoppingBag() {
-  const { bagItems, removeFromBag, clearBag, updateQuantity } =
+  const { bagItems, removeFromBag, updateQuantity } =
     useContext(ShoppingBagContext);
   const [isRemoving, setIsRemoving] = useState({});
   const navigate = useNavigate();
@@ -45,7 +51,7 @@ function ShoppingBag() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.5 }}
                   className="relative flex flex-col items-center justify-between p-4 bg-white shadow-md rounded-lg max-w-600px"
-                  onClick={() => navigate(`/product/j${item.the_item_id}`)}
+                  onClick={() => navigate(`/product/${item.item_id}`)}
                 >
                   <div className="flex items-center w-full">
                     <img
@@ -61,6 +67,7 @@ function ShoppingBag() {
                   </div>
                   <div className="flex items-center justify-between w-full mt-2">
                     <div className="flex items-center">
+                      {console.log("item in bag line:70",item)}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -98,29 +105,26 @@ function ShoppingBag() {
                 </motion.div>
               ))}
             </AnimatePresence>
-            <div className="flex justify-center">
-              <button
-                onClick={clearBag}
-                className="w-80 py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-700 focus:outline-none"
+
+            <div className="flex justify-between w-full mt-8">
+              <Link
+                to="/"
+                className="flex items-center text-gray-700 hover:text-black focus:outline-none"
               >
-                Clear Bag
-              </button>
+                <FaShoppingCart className="w-6 h-6 mr-2" />
+                Continue Shopping
+              </Link>
+              {bagItems.length > 0 && (
+                <button
+                  onClick={handleCheckout}
+                  className="flex items-center text-gray-700 hover:text-black focus:outline-none"
+                >
+                  <FaCcPaypal className="w-6 h-6 mr-2" />
+                  {`Checkout £${totalPrice}`}
+                </button>
+              )}
             </div>
           </div>
-        )}
-        <Link
-          to="/"
-          className="w-80 mt-4 py-2 px-4 rounded-md bg-blue-500 text-white hover:bg-blue-700 focus:outline-none flex items-center justify-center"
-        >
-          Continue Shopping
-        </Link>
-        {bagItems.length > 0 && (
-          <button
-            onClick={handleCheckout}
-            className="w-80 mt-4 py-2 px-4 rounded-md bg-green-500 text-white hover:bg-green-700 focus:outline-none flex items-center justify-center"
-          >
-            {`Checkout £${totalPrice}`}
-          </button>
         )}
       </div>
     </div>
