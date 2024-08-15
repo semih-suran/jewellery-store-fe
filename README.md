@@ -8,6 +8,10 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 - Non-Logged-In User > "Remove from bag" not working.
 
+- On Favourites Page, add to bag is removing the favourite item but not actually adding it in to the bag
+
+- ItemDetails Page, add to bag button is not working
+
 - recently added favourites for Logged-In User are not loading properly in favourites page before a page refresh.
 
 ### [Upcoming-Features]
