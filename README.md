@@ -4,6 +4,20 @@ Welcome to the Jewellery Store project!
 
 This project is a work-in-progress e-commerce website for a jewellery store. It aims to provide users with a seamless shopping experience for purchasing earrings, rings, necklaces, and bracelets.
 
+### [KNOWN-ISSUES]
+
+- Non-Logged-In User > "Remove from bag" not working.
+
+- recently added favourites for Logged-In User are not loading properly in favourites page before a page refresh.
+
+### [Upcoming-Features]
+
+- Admin Page > not created yet (add/remove/edit items, Handle orders)
+
+- My Account Page > not created yet (add/update your account details)
+
+- Reviews/Comments for each item > not available yet
+
 ## Figma Design
 
 Check out the Figma Design of the Jewellery Store: [Link will be updated!](https://jewellery-store-semih.netlify.app/)
