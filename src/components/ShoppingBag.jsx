@@ -67,7 +67,6 @@ function ShoppingBag() {
                   </div>
                   <div className="flex items-center justify-between w-full mt-2">
                     <div className="flex items-center">
-                      {console.log("item in bag line:70",item)}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

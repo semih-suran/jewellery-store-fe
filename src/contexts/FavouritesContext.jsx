@@ -11,6 +11,7 @@ export const FavouritesContext = createContext();
 export const FavouritesProvider = ({ children }) => {
   const [favourites, setFavourites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export const FavouritesProvider = ({ children }) => {
     };
 
     loadFavourites();
-  }, [user]);
+  }, [user, refreshKey]);
 
   useEffect(() => {
     if (!user) {
@@ -54,6 +55,7 @@ export const FavouritesProvider = ({ children }) => {
       const productDetails = await fetchProductById(item.item_id);
       const detailedItem = { ...item, ...productDetails };
       setFavourites((prevFavourites) => [...prevFavourites, detailedItem]);
+      setRefreshKey((prevKey) => prevKey + 1);
 
       if (!user) {
         const updatedFavourites = [...favourites, detailedItem];
@@ -71,6 +73,7 @@ export const FavouritesProvider = ({ children }) => {
         setFavourites((prevFavourites) =>
           prevFavourites.filter((item) => item.the_item_id !== itemId)
         );
+        setRefreshKey((prevKey) => prevKey + 1);
       } catch (error) {
         console.error("Failed to remove favourite item for user:", error);
       }
