@@ -75,6 +75,7 @@ const ProductDetails = () => {
       } else {
         addToFavourites({
           item_id: item.item_id,
+          the_item_id: item.the_item_id,
           name: item.name,
           images_url: item.images_url,
           price: item.price,
@@ -89,10 +90,11 @@ const ProductDetails = () => {
     setIsButtonDisabled(true);
     setIsAddedToBag(true);
 
-    if (user) {  
+    if (user) {
       await addUserBagItem(user.user_id, item.the_item_id, quantity);
       addToBag({
-        item_id: item.the_item_id,
+        item_id: item.item_id,
+        the_item_id: item.the_item_id,
         name: item.name,
         images_url: item.images_url,
         price: item.price,
@@ -101,6 +103,7 @@ const ProductDetails = () => {
     } else {
       addToBag({
         item_id: item.item_id,
+        the_item_id: item.the_item_id,
         name: item.name,
         images_url: item.images_url,
         price: item.price,
@@ -118,7 +121,9 @@ const ProductDetails = () => {
     const fetchItemDetails = async () => {
       const fetchedItem = await fetchProductById(productId);
       setItem(fetchedItem);
-      setIsFavourite(favourites.some((favItem) => favItem.item_id === productId));
+      setIsFavourite(
+        favourites.some((favItem) => favItem.item_id === productId)
+      );
     };
     fetchItemDetails();
   }, [productId, favourites]);
