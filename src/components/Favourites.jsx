@@ -6,24 +6,57 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaHeartBroken, FaCartPlus } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import ClipLoader from "react-spinners/ClipLoader";
+import { AuthContext } from "./AuthProvider";
+import { addUserBagItem } from "../services/api";
 
 function Favourites() {
   const { favourites, removeFromFavourites, loading } =
     useContext(FavouritesContext);
   const { addToBag } = useContext(ShoppingBagContext);
-  const [isAdded, setIsAdded] = useState({});
+  const { user } = useContext(AuthContext);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isAddedToBag, setIsAddedToBag] = useState({});
+
+  const quantity = 1;
 
   const handleAddToBag = async (item) => {
-    const quantity = 1;
-    setIsAdded((prev) => ({ ...prev, [item.item_id]: true }));
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    addToBag({ ...item, quantity });
-    removeFromFavourites(item.the_item_id);
-    setIsAdded((prev) => ({ ...prev, [item.item_id]: false }));
+    if (isButtonDisabled) return;
+
+    setIsButtonDisabled(true);
+    setIsAddedToBag((prevState) => ({ ...prevState, [item.item_id]: true }));
+
+    if (user) {
+      await addUserBagItem(user.user_id, item.the_item_id, quantity);
+      addToBag({
+        item_id: item.item_id,
+        name: item.name,
+        images_url: item.images_url,
+        price: item.price,
+        quantity: quantity,
+      });
+    } else {
+      addToBag({
+        item_id: item.item_id,
+        name: item.name,
+        images_url: item.images_url,
+        price: item.price,
+        quantity: quantity,
+      });
+    }
+
+    handleRemoveFromFavourites(item);
+
+    setTimeout(() => {
+      setIsAddedToBag(false);
+      setIsButtonDisabled(false);
+    }, 500);
   };
 
   const handleRemoveFromFavourites = (item) => {
-    setIsAdded((prev) => ({ ...prev, [item.item_id]: "removing" }));
+    setIsAddedToBag((prevState) => ({
+      ...prevState,
+      [item.item_id]: "removing",
+    }));
     setTimeout(() => {
       removeFromFavourites(item.the_item_id);
     }, 500);
@@ -35,7 +68,7 @@ function Favourites() {
       favourites.forEach((item) => {
         newIsAdded[item.item_id] = false;
       });
-      setIsAdded(newIsAdded);
+      setIsAddedToBag(newIsAdded);
     }
   }, [favourites, loading]);
 
@@ -61,7 +94,7 @@ function Favourites() {
                   key={item.item_id}
                   initial={{ opacity: 1 }}
                   animate={{
-                    opacity: isAdded[item.item_id] === "removing" ? 0 : 1,
+                    opacity: isAddedToBag[item.item_id] === "removing" ? 0 : 1,
                   }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
@@ -84,15 +117,15 @@ function Favourites() {
                       className="text-xs py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       animate={{
                         scale:
-                          isAdded[item.item_id] &&
-                          isAdded[item.item_id] !== "removing"
+                          isAddedToBag[item.item_id] &&
+                          isAddedToBag[item.item_id] !== "removing"
                             ? [1, 1.2, 1]
                             : 1,
                       }}
                       transition={{ duration: 0.5 }}
                     >
-                      {isAdded[item.item_id] &&
-                      isAdded[item.item_id] !== "removing" ? (
+                      {isAddedToBag[item.item_id] &&
+                      isAddedToBag[item.item_id] !== "removing" ? (
                         <BsFillCartCheckFill className="w-6 h-6 text-green-500 hover:text-green-700" />
                       ) : (
                         <FaCartPlus className="w-6 h-6 text-gray-500 hover:text-gray-700" />

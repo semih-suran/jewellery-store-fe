@@ -23,7 +23,6 @@ const Item = ({ id }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isAddedToBag, setIsAddedToBag] = useState(false);
   const [isFavourite, setIsFavourite] = useState(false);
-
   const quantity = 0;
   const navigate = useNavigate();
 

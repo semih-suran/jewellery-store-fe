@@ -6,21 +6,18 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 ### [KNOWN-ISSUES]
 
-- Non-Logged-In User > "Remove from bag" not working.
+- For a Non-Logged-In User > "Remove from bag" not working.
 
-- On Favourites Page, add to bag is removing the favourite item but not actually adding it in to the bag
+- For a Logged-In User > On Favourites Page, when adding an item to the bag, functionality is working but also throwing some BE errors
 
-- ItemDetails Page, add to bag button is not working
-
-- recently added favourites for Logged-In User are not loading properly in favourites page before a page refresh.
 
 ### [Upcoming-Features]
-
-- Admin Page > not created yet (add/remove/edit items, Handle orders)
 
 - My Account Page > not created yet (add/update your account details)
 
 - Reviews/Comments for each item > not available yet
+
+- Admin Page > not created yet (add/remove/edit items, Handle orders)
 
 ## Figma Design
 
