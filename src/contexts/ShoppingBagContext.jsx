@@ -106,7 +106,7 @@ export const ShoppingBagProvider = ({ children }) => {
     } else {
       const storedBagItems = JSON.parse(localStorage.getItem("bagItems")) || [];
       const updatedBagItems = storedBagItems.filter(
-        (item) => item.item_id !== `j` + itemId
+        (item) => item.item_id !== `j${itemId}`
       );
       localStorage.setItem("bagItems", JSON.stringify(updatedBagItems));
     }

@@ -60,6 +60,7 @@ const Item = ({ id }) => {
       } else {
         addToFavourites({
           item_id: item.item_id,
+          the_item_id: item.the_item_id,
           name: item.name,
           images_url: item.images_url,
           price: item.price,
@@ -86,6 +87,7 @@ const Item = ({ id }) => {
     } else {
       addToBag({
         item_id: item.item_id,
+        the_item_id: item.the_item_id,
         name: item.name,
         images_url: item.images_url,
         price: item.price,

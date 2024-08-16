@@ -6,10 +6,7 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 ### [KNOWN-ISSUES]
 
-- For a Non-Logged-In User > "Remove from bag" not working.
-
 - For a Logged-In User > On Favourites Page, when adding an item to the bag, functionality is working but also throwing some BE errors
-
 
 ### [Upcoming-Features]
 
