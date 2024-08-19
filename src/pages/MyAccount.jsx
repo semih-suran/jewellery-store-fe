@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
+import { MdDone } from "react-icons/md";
+import { GiSandsOfTime } from "react-icons/gi";
 import {
   fetchUserById,
   updateUserAddress,
   updateUserNickname,
 } from "../services/api";
+import Footer from "../components/Footer";
 
 function MyAccount() {
   const { user_id } = useParams();
@@ -36,6 +39,10 @@ function MyAccount() {
       console.error("Failed to update nickname:", error);
       alert("Failed to update nickname.");
     }
+  };
+
+  const underDevelopment = () => {
+    alert("Under Development...");
   };
 
   const handleSaveAddress = async () => {
@@ -188,52 +195,74 @@ function MyAccount() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 p-8 pt-32">
-      <div className="flex flex-row w-full h-full max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="w-1/4 bg-blue-500 p-6 flex flex-col items-center text-white">
-          <img
-            src={user.picture}
-            alt="User Profile"
-            className="w-24 h-24 mb-4 rounded-full border-4 border-white"
-          />
-          <h1 className="text-xl font-semibold">
-            {user.first_name} {user.last_name}
-          </h1>
-          <p className="text-sm">{user.email}</p>
-          <p className="text-sm mb-4">{user.nickname}</p>
-          <div className="flex flex-col space-y-2 mt-6">
-            <button
-              onClick={() => setActiveTab("Profile")}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
-            >
-              Profile
-            </button>
-            <button
-              onClick={() => setActiveTab("Contact")}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
-            >
-              Contact
-            </button>
-            <button
-              onClick={() => setActiveTab("Address")}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
-            >
-              Address
-            </button>
-            <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
-              My Orders
-            </button>
-            <Link
-              to="/"
-              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-center"
-            >
-              Home Page
-            </Link>
+    <>
+      <div className="flex flex-col min-h-screen bg-gray-100 p-8 pt-32">
+        <div className="flex flex-col sm:flex-row w-full h-full max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="sm:w-1/4 w-full bg-blue-500 p-6 flex flex-col items-center text-white sm:min-w-[250px] sm:max-w-[250px]">
+            <img
+              src={user.picture}
+              alt="User Profile"
+              className="w-24 h-24 mb-4 rounded-full border-4 border-white"
+            />
+            <h1 className="text-xl font-semibold">
+              {user.first_name} {user.last_name}
+            </h1>
+            <p className="text-sm">{user.email}</p>
+            <p className="text-sm">{user.nickname}</p>
+            <p className="text-sm">
+              Member Since:{" "}
+              {new Date(user.created_at).toISOString().slice(0, 10)}
+            </p>
+            <div className="grid grid-cols-2 gap-2 mt-6 w-full">
+              <button
+                onClick={() => setActiveTab("Profile")}
+                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+              >
+                Profile
+              </button>
+              <button
+                onClick={() => setActiveTab("Contact")}
+                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+              >
+                Contact
+              </button>
+              <button
+                onClick={() => setActiveTab("Address")}
+                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+              >
+                Address
+              </button>
+              <button
+                onClick={underDevelopment}
+                className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded flex items-center justify-center gap-1"
+              >
+                Orders <MdDone />
+              </button>
+              <Link
+                to="/"
+                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-center"
+              >
+                Home
+              </Link>
+              <button
+                onClick={underDevelopment}
+                className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded flex items-center justify-center gap-1"
+              >
+                Orders <GiSandsOfTime />
+              </button>
+            </div>
+            <p className="text-sm">
+              Last Updated:{" "}
+              {new Date(user.updated_at).toISOString().slice(0, 10)}
+            </p>
           </div>
+          <div className="w-3/4 p-6">{renderContent()}</div>
         </div>
-        <div className="w-3/4 p-6">{renderContent()}</div>
       </div>
-    </div>
+      <div>
+        <Footer />
+      </div>
+    </>
   );
 }
 

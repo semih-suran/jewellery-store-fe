@@ -77,7 +77,7 @@ const Navbar = () => {
   const underDevelopment = () => {
     alert("Under Development...");
   };
-  
+
   const toggleSearch = () => {
     setSearchOpen(!searchOpen);
   };
@@ -184,15 +184,16 @@ const Navbar = () => {
                     >
                       My Account
                     </Link>
-                    <button
+                    <Link
                       onClick={() => {
                         handleLogout();
                         toggleDropdown();
                       }}
+                      to={"/"}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
                       Logout
-                    </button>
+                    </Link>
                   </div>
                 )}
               </div>

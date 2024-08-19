@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const underDevelopment = () => {
+    alert("Under Development...");
+  };
+
   return (
     <footer className="bg-white shadow-md mt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -24,7 +28,8 @@ const Footer = () => {
           </li>
           <li>
             <Link
-              to="https://static1.cbrimages.com/wordpress/wp-content/uploads/2018/08/Wile-E-Coyote-Movie.jpg"
+              to="#"
+              onClick={underDevelopment}
               className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Delivery & Returns
@@ -32,7 +37,8 @@ const Footer = () => {
           </li>
           <li>
             <Link
-              to="https://fiveminutemarketing.com/wp-content/uploads/2013/11/Top-Secret2.jpg"
+              to="#"
+              onClick={underDevelopment}
               className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Privacy Policy
