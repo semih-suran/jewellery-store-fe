@@ -13,6 +13,7 @@ import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion, useAnimation } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
 import { AuthContext } from "../components/AuthProvider";
+import Footer from "../components/Footer";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -227,6 +228,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 };
