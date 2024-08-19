@@ -96,6 +96,42 @@ export const fetchProductById = async (productId) => {
   }
 };
 
+export const fetchUserById = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/shoppingusers/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching user by ID ${userId}:`, error);
+    throw error;
+  }
+};
+
+export const updateUserAddress = async (userId, addressData) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/shoppingusers/${userId}/address`,
+      addressData
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating address for user ${userId}:`, error);
+    throw error;
+  }
+};
+
+export const updateUserNickname = async (userId, nicknameData) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/shoppingusers/${userId}/nickname`,
+      nicknameData
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating address for user ${userId}:`, error);
+    throw error;
+  }
+};
+
 export const fetchUserBag = async (userId) => {
   try {
     const response = await axios.get(`${BASE_URL}/shoppingbag/${userId}`);

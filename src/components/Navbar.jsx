@@ -74,6 +74,10 @@ const Navbar = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  const underDevelopment = () => {
+    alert("Under Development...");
+  };
+  
   const toggleSearch = () => {
     setSearchOpen(!searchOpen);
   };
@@ -171,9 +175,12 @@ const Navbar = () => {
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg py-1">
                     <Link
-                      to="/my-account"
+                      to={`/my-account/${user.user_id}`}
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      onClick={toggleDropdown}
+                      onClick={() => {
+                        underDevelopment();
+                        toggleDropdown();
+                      }}
                     >
                       My Account
                     </Link>
