@@ -21,7 +21,7 @@ import AllProducts from "./components/AllItems";
 import MyAccount from "./pages/MyAccount";
 import ProductDetails from "./pages/ItemDetails";
 import { ShoppingBagProvider } from "./contexts/ShoppingBagContext";
-import {FavouritesProvider} from "./contexts/FavouritesContext";
+import { FavouritesProvider } from "./contexts/FavouritesContext";
 import SearchResults from "./components/SearchResults";
 import CheckoutPage from "./components/CheckoutPage";
 import AnimatedPage from "./services/api";
@@ -119,7 +119,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="/my-account"
+          path="/my-account/:user_id"
           element={
             <AnimatedPage>
               <MyAccount />

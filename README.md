@@ -8,6 +8,8 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 - For a Logged-In User > On Favourites Page, when adding an item to the bag, functionality is working but also throwing some BE errors
 
+- ItemDetails Page add to bag item throwing errors and adding with 0 qty
+
 ### [Upcoming-Features]
 
 - My Account Page > not created yet (add/update your account details)

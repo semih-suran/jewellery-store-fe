@@ -27,7 +27,7 @@ const ProductDetails = () => {
   const { user } = useContext(AuthContext);
   const controls = useAnimation();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const quantity = 0;
+  const quantity = 1;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,7 +98,7 @@ const ProductDetails = () => {
         name: item.name,
         images_url: item.images_url,
         price: item.price,
-        quantity: quantity + 1,
+        quantity: quantity,
       });
     } else {
       addToBag({
@@ -107,7 +107,7 @@ const ProductDetails = () => {
         name: item.name,
         images_url: item.images_url,
         price: item.price,
-        quantity: quantity + 1,
+        quantity: quantity,
       });
     }
 
