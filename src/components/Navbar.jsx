@@ -19,6 +19,7 @@ import {
   FaUser,
 } from "react-icons/fa";
 import Modal from "./Modal";
+import UnderDevelopment from "./UnderDevelopment.jsx";
 
 const Search = lazy(() =>
   import("./Search").then((module) => ({ default: module.Search }))
@@ -35,6 +36,13 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
 
   const dropdownRef = useRef(null);
+  const menuRef = useRef(null);
+
+  const [showAlert, setShowAlert] = useState(false);
+
+  // const underDevelopment = () => {
+  //   setShowAlert(true);
+  // };
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -46,6 +54,10 @@ const Navbar = () => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
+      }
+
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
       }
     };
 
@@ -72,10 +84,6 @@ const Navbar = () => {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
-  };
-
-  const underDevelopment = () => {
-    alert("Under Development...");
   };
 
   const toggleSearch = () => {
@@ -127,138 +135,144 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="bg-white shadow-md fixed top-0 w-full z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <div className="text-2xl font-bold ml-4">
-              <Link to="/">Jewellery Store</Link>
+    <>
+      <nav className="bg-white shadow-md fixed top-0 w-full z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <div className="text-2xl font-bold ml-4">
+                <Link to="/">Jewellery Store</Link>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <Link
+                to="/favourites"
+                className="text-gray-700 hover:text-gray-900 relative"
+              >
+                <FaHeart className="w-6 h-6" />
+                {favourites.length > 0 && (
+                  <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                    {favourites.length}
+                  </span>
+                )}
+              </Link>
+              <Link
+                to="/shopping-bag"
+                className="text-gray-700 hover:text-gray-900 relative"
+              >
+                <FaShoppingCart className="w-6 h-6" />
+                {bagItems.length > 0 && (
+                  <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                    {bagItems.length}
+                  </span>
+                )}
+              </Link>
+
+              {user ? (
+                <div className="relative" ref={dropdownRef}>
+                  <div
+                    className="cursor-pointer flex items-center space-x-2"
+                    onClick={toggleDropdown}
+                  >
+                    <img
+                      src={user.picture}
+                      alt={`${user.nickname}'s avatar`}
+                      className="w-8 h-8 rounded-full"
+                    />
+                  </div>
+                  {dropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg py-1">
+                      <Link
+                        to={`/my-account/${user.user_id}`}
+                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        onClick={() => {
+                          toggleDropdown();
+                        }}
+                      >
+                        My Account
+                      </Link>
+                      <Link
+                        onClick={() => {
+                          handleLogout();
+                          toggleDropdown();
+                        }}
+                        to={"/"}
+                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      >
+                        Logout
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  className="text-gray-700 hover:text-gray-900 relative"
+                  onClick={() => setShowModal(true)}
+                >
+                  <FaUser className="w-6 h-6" />
+                </button>
+              )}
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <Link
-              to="/favourites"
-              className="text-gray-700 hover:text-gray-900 relative"
-            >
-              <FaHeart className="w-6 h-6" />
-              {favourites.length > 0 && (
-                <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                  {favourites.length}
-                </span>
-              )}
-            </Link>
-            <Link
-              to="/shopping-bag"
-              className="text-gray-700 hover:text-gray-900 relative"
-            >
-              <FaShoppingCart className="w-6 h-6" />
-              {bagItems.length > 0 && (
-                <span className="absolute top-3 right-0 inline-flex items-center justify-center px-0.5 py-0 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                  {bagItems.length}
-                </span>
-              )}
-            </Link>
-
-            {user ? (
-              <div className="relative" ref={dropdownRef}>
-                <div
-                  className="cursor-pointer flex items-center space-x-2"
-                  onClick={toggleDropdown}
-                >
-                  <img
-                    src={user.picture}
-                    alt={`${user.nickname}'s avatar`}
-                    className="w-8 h-8 rounded-full"
-                  />
-                </div>
-                {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg py-1">
-                    <Link
-                      to={`/my-account/${user.user_id}`}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      onClick={() => {
-                        underDevelopment();
-                        toggleDropdown();
-                      }}
-                    >
-                      My Account
-                    </Link>
-                    <Link
-                      onClick={() => {
-                        handleLogout();
-                        toggleDropdown();
-                      }}
-                      to={"/"}
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Logout
-                    </Link>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <button
-                className="text-gray-700 hover:text-gray-900 relative"
-                onClick={() => setShowModal(true)}
-              >
-                <FaUser className="w-6 h-6" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between mt-2">
-          <div className="flex flex-col items-start">
-            {windowWidth > 600 ? (
-              renderMenuItems("flex ml-4 space-x-4")
-            ) : (
-              <>
-                {!isOpen && (
-                  <button
-                    onClick={toggleMenu}
-                    className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    Menu
-                  </button>
-                )}
-                {isOpen && windowWidth < 680 && (
-                  <>
+          <div className="flex items-center justify-between mt-2" ref={menuRef}>
+            <div className="flex flex-col items-start">
+              {windowWidth > 600 ? (
+                renderMenuItems("flex ml-4 space-x-4")
+              ) : (
+                <>
+                  {!isOpen && (
                     <button
                       onClick={toggleMenu}
                       className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                     >
                       Menu
                     </button>
-                    <div className="flex flex-col space-y-1 ml-4">
-                      {renderMenuItems("flex flex-col")}
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-          </div>
-          <div className="flex-grow flex justify-end">
-            <button className="px-4 py-2 rounded-full" onClick={toggleSearch}>
-              {searchOpen ? (
-                <FaWindowClose className="text-gray-700" />
-              ) : (
-                <FaSearch className="text-gray-700" />
+                  )}
+                  {isOpen && windowWidth < 680 && (
+                    <>
+                      <button
+                        onClick={toggleMenu}
+                        className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Menu
+                      </button>
+                      <div className="flex flex-col space-y-1 ml-4">
+                        {renderMenuItems("flex flex-col")}
+                      </div>
+                    </>
+                  )}
+                </>
               )}
-            </button>
-          </div>
-        </div>
-
-        {searchOpen && (
-          <Suspense fallback={<div>Loading...</div>}>
-            <div className="mt-4">
-              <Search onSearchClose={closeSearch} />
             </div>
-          </Suspense>
-        )}
-      </div>
-      <Modal showModal={showModal} setShowModal={setShowModal} />
-    </nav>
+            <div className="flex-grow flex justify-end">
+              <button className="px-4 py-2 rounded-full" onClick={toggleSearch}>
+                {searchOpen ? (
+                  <FaWindowClose className="text-gray-700" />
+                ) : (
+                  <FaSearch className="text-gray-700" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {searchOpen && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <div className="mt-4">
+                <Search onSearchClose={closeSearch} />
+              </div>
+            </Suspense>
+          )}
+        </div>
+        <Modal showModal={showModal} setShowModal={setShowModal} />
+      </nav>
+      <UnderDevelopment
+        show={showAlert}
+        onClose={() => setShowAlert(false)}
+        message="This section is currently under development. Please check back later."
+      />
+    </>
   );
 };
 

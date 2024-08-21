@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
+import { FaRegSave } from "react-icons/fa";
 import { GiSandsOfTime } from "react-icons/gi";
 import {
   fetchUserById,
@@ -10,11 +10,18 @@ import {
   updateUserNickname,
 } from "../services/api";
 import Footer from "../components/Footer";
+import UnderDevelopment from "../components/UnderDevelopment";
 
 function MyAccount() {
   const { user_id } = useParams();
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState("Profile");
+
+  const [showAlert, setShowAlert] = useState(false);
+
+  const underDevelopment = () => {
+    setShowAlert(true);
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,17 +48,13 @@ function MyAccount() {
     }
   };
 
-  const underDevelopment = () => {
-    alert("Under Development...");
-  };
-
   const handleSaveAddress = async () => {
     try {
       const updatedAddress = {
         street: user.street,
         city: user.city,
         state: user.state,
-        zipcode: user.zipcode,
+        zipCode: user.zipcode,
         country: user.country,
       };
       await updateUserAddress(user.user_id, updatedAddress);
@@ -76,7 +79,6 @@ function MyAccount() {
                 disabled
                 className="w-full p-2 mb-4 border border-gray-300 rounded-md bg-gray-200"
               />
-              <FaEdit className="absolute right-2 top-3 text-gray-400" />
             </div>
             <label className="block mb-2">Last Name:</label>
             <div className="relative">
@@ -86,7 +88,6 @@ function MyAccount() {
                 disabled
                 className="w-full p-2 mb-4 border border-gray-300 rounded-md bg-gray-200"
               />
-              <FaEdit className="absolute right-2 top-3 text-gray-400" />
             </div>
             <label className="block mb-2">Nickname:</label>
             <div className="relative">
@@ -94,13 +95,18 @@ function MyAccount() {
                 type="text"
                 value={user.nickname || ""}
                 onChange={(e) => setUser({ ...user, nickname: e.target.value })}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-blue-400"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-black"
               />
-              <FaEdit className="absolute right-2 top-3 text-blue-500 hover:text-blue-700" />
             </div>
-            <button onClick={handleSaveNickname} className="btn-save">
-              Save Profile
-            </button>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={handleSaveNickname}
+                className="flex items-center gap-2 px-4 py-2 border border-black rounded-md bg-white hover:bg-gray-100"
+              >
+                <FaRegSave />
+                Save
+              </button>
+            </div>
           </div>
         );
       case "Contact":
@@ -115,7 +121,6 @@ function MyAccount() {
                 disabled
                 className="w-full p-2 mb-4 border border-gray-300 rounded-md bg-gray-200"
               />
-              <FaEdit className="absolute right-2 top-3 text-gray-400" />
             </div>
             <label className="block mb-2">Mobile Phone:</label>
             <div className="relative">
@@ -125,9 +130,13 @@ function MyAccount() {
                 disabled
                 className="w-full p-2 mb-4 border border-gray-300 rounded-md bg-gray-200"
               />
-              <FaEdit className="absolute right-2 top-3 text-gray-400" />
             </div>
-            <button className="btn-save">Save Contact</button>
+            <div className="flex justify-center mt-4">
+              <button className="flex items-center gap-2 px-4 py-2 border border-black rounded-md bg-white hover:bg-gray-100">
+                <FaRegSave />
+                Save
+              </button>
+            </div>
           </div>
         );
       case "Address":
@@ -140,9 +149,8 @@ function MyAccount() {
                 type="text"
                 value={user.street || ""}
                 onChange={(e) => setUser({ ...user, street: e.target.value })}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-blue-400"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-black"
               />
-              <FaEdit className="absolute right-2 top-3 text-blue-500 hover:text-blue-700" />
             </div>
             <label className="block mb-2">City:</label>
             <div className="relative">
@@ -150,9 +158,8 @@ function MyAccount() {
                 type="text"
                 value={user.city || ""}
                 onChange={(e) => setUser({ ...user, city: e.target.value })}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-blue-400"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-black"
               />
-              <FaEdit className="absolute right-2 top-3 text-blue-500 hover:text-blue-700" />
             </div>
             <label className="block mb-2">State:</label>
             <div className="relative">
@@ -160,9 +167,8 @@ function MyAccount() {
                 type="text"
                 value={user.state || ""}
                 onChange={(e) => setUser({ ...user, state: e.target.value })}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-blue-400"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-black"
               />
-              <FaEdit className="absolute right-2 top-3 text-blue-500 hover:text-blue-700" />
             </div>
             <label className="block mb-2">Zip Code:</label>
             <div className="relative">
@@ -170,9 +176,8 @@ function MyAccount() {
                 type="text"
                 value={user.zipcode || ""}
                 onChange={(e) => setUser({ ...user, zipcode: e.target.value })}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-blue-400"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-black"
               />
-              <FaEdit className="absolute right-2 top-3 text-blue-500 hover:text-blue-700" />
             </div>
             <label className="block mb-2">Country:</label>
             <div className="relative">
@@ -180,13 +185,18 @@ function MyAccount() {
                 type="text"
                 value={user.country || ""}
                 onChange={(e) => setUser({ ...user, country: e.target.value })}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-blue-400"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md hover:border-black"
               />
-              <FaEdit className="absolute right-2 top-3 text-blue-500 hover:text-blue-700" />
             </div>
-            <button onClick={handleSaveAddress} className="btn-save">
-              Save Address
-            </button>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={handleSaveAddress}
+                className="flex items-center gap-2 px-4 py-2 border border-black rounded-md bg-white hover:bg-gray-100"
+              >
+                <FaRegSave />
+                Save
+              </button>
+            </div>
           </div>
         );
       default:
@@ -198,7 +208,7 @@ function MyAccount() {
     <>
       <div className="flex flex-col min-h-screen bg-gray-100 p-8 pt-32">
         <div className="flex flex-col sm:flex-row w-full h-full max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="sm:w-1/4 w-full bg-blue-500 p-6 flex flex-col items-center text-white sm:min-w-[250px] sm:max-w-[250px]">
+          <div className="sm:w-1/4 w-full bg-gray-700 p-6 flex flex-col items-center text-white sm:min-w-[250px] sm:max-w-[250px]">
             <img
               src={user.picture}
               alt="User Profile"
@@ -216,52 +226,58 @@ function MyAccount() {
             <div className="grid grid-cols-2 gap-2 mt-6 w-full">
               <button
                 onClick={() => setActiveTab("Profile")}
-                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                className="bg-gray-600 text-white py-2 px-4 rounded border border-transparent hover:border-white"
               >
                 Profile
               </button>
+              <Link
+                to="/"
+                className="bg-gray-600 text-white py-2 px-4 rounded border border-transparent hover:border-white text-center"
+              >
+                Home
+              </Link>
               <button
                 onClick={() => setActiveTab("Contact")}
-                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                className="bg-gray-600 text-white py-2 px-4 rounded border border-transparent hover:border-white"
               >
                 Contact
               </button>
               <button
+                onClick={underDevelopment}
+                className="bg-gray-600 text-white py-2 px-4 rounded border border-transparent hover:border-white flex items-center justify-center gap-1"
+              >
+                Orders <MdDone />
+              </button>
+              <button
                 onClick={() => setActiveTab("Address")}
-                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                className="bg-gray-600 text-white py-2 px-4 rounded border border-transparent hover:border-white"
               >
                 Address
               </button>
               <button
                 onClick={underDevelopment}
-                className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded flex items-center justify-center gap-1"
-              >
-                Orders <MdDone />
-              </button>
-              <Link
-                to="/"
-                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-center"
-              >
-                Home
-              </Link>
-              <button
-                onClick={underDevelopment}
-                className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded flex items-center justify-center gap-1"
+                className="bg-gray-600 text-white py-2 px-4 rounded border border-transparent hover:border-white flex items-center justify-center gap-1"
               >
                 Orders <GiSandsOfTime />
               </button>
             </div>
+
             <p className="text-sm">
               Last Updated:{" "}
               {new Date(user.updated_at).toISOString().slice(0, 10)}
             </p>
           </div>
-          <div className="w-3/4 p-6">{renderContent()}</div>
+          <div className="w-full p-6">{renderContent()}</div>
         </div>
       </div>
       <div>
         <Footer />
       </div>
+      <UnderDevelopment
+        show={showAlert}
+        onClose={() => setShowAlert(false)}
+        message="This section is currently under development. Please check back later."
+      />
     </>
   );
 }

@@ -40,7 +40,7 @@ const HomePage = () => {
         />
         <div className="relative z-10 flex items-center justify-center h-full">
           <h1 className="text-4xl font-bold text-white text-center">
-            Welcome to Jewellery Store
+            Catchphrase...
           </h1>
         </div>
       </div>
