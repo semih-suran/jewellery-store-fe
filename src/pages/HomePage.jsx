@@ -29,18 +29,19 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col pt-32">
       <div className="relative w-full h-screen overflow-hidden">
-        <iframe
+        <video
           ref={videoRef}
           className="absolute top-0 left-0 w-full h-full object-cover"
-          src="https://www.youtube.com/embed/f1pCOvwKCxs?autoplay=1&mute=1&loop=1&playlist=f1pCOvwKCxs"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          title="Jewellery Store Background"
+          src="/media/JewelleryPromoVideo.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-label="Jewellery promotional video"
         />
         <div className="relative z-10 flex items-center justify-center h-full">
           <h1 className="text-4xl font-bold text-white text-center">
-            Catchphrase...
+            Discover Elegance
           </h1>
         </div>
       </div>
