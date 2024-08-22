@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaHeartBroken, FaCartPlus } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import ClipLoader from "react-spinners/ClipLoader";
-import { AuthContext } from "./AuthProvider";
+import { AuthContext } from "../components/AuthProvider";
 import { addUserBagItem } from "../services/api";
 import Footer from "../components/Footer";
 
