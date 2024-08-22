@@ -11,6 +11,7 @@ import {
   addUserBagItem,
   addUserFavouriteItem,
   removeUserFavouriteItem,
+  fetchReviewsByItemId,
 } from "../services/api";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -20,6 +21,7 @@ const Item = ({ id }) => {
     useContext(FavouritesContext);
   const { user } = useContext(AuthContext);
   const [item, setItem] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isAddedToBag, setIsAddedToBag] = useState(false);
   const [isFavourite, setIsFavourite] = useState(false);
@@ -102,13 +104,34 @@ const Item = ({ id }) => {
   };
 
   useEffect(() => {
-    const fetchItemDetails = async () => {
-      const fetchedItem = await fetchProductById(id);
-      setItem(fetchedItem);
-      setIsFavourite(favourites.some((favItem) => favItem.item_id === id));
+    const fetchItemData = async () => {
+      try {
+        const fetchedItem = await fetchProductById(id);
+        const fetchedReviews = await fetchReviewsByItemId(
+          fetchedItem.the_item_id
+        );
+
+        setItem(fetchedItem);
+        setReviews(fetchedReviews.reviews);
+        setIsFavourite(favourites.some((favItem) => favItem.item_id === id));
+      } catch (error) {
+        console.error("Error fetching item details or reviews:", error);
+      }
     };
-    fetchItemDetails();
+
+    fetchItemData();
   }, [id, favourites]);
+
+  if (!item) {
+    return (
+      <div
+        className="w-full flex justify-center items-center"
+        style={{ height: "200px" }}
+      >
+        <ClipLoader size={50} color={"#123abc"} loading={!item} />
+      </div>
+    );
+  }
 
   if (!item) {
     return (
@@ -125,10 +148,12 @@ const Item = ({ id }) => {
     navigate(`/product/${id}`);
   };
 
-  const formattedReviewScore =
-    item.review_score === "0.00"
-      ? "No Reviews Yet"
-      : parseFloat(item.review_score).toFixed(1);
+  const calculateAverageRating = () => {
+    if (reviews.length === 0) return "No Reviews Yet";
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const averageRating = totalRating / reviews.length;
+    return averageRating.toFixed(1);
+  };
 
   return (
     <div className="w-full max-w-xs bg-white p-4 rounded-lg shadow-md flex-shrink-0">
@@ -144,7 +169,7 @@ const Item = ({ id }) => {
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center">
             <FaStar className="text-yellow-500" />
-            <p className="ml-1">{formattedReviewScore}</p>
+            <p className="ml-1">{calculateAverageRating()}</p>
           </div>
           <div className="flex items-center">
             <motion.button

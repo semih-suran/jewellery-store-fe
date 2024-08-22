@@ -10,13 +10,13 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import Favourites from "./components/Favourites";
+import Favourites from "./pages/Favourites";
 import AuthProvider from "./components/AuthProvider";
 import EarringsRaw from "./components/EarringsRaw";
 import BraceletsRaw from "./components/BraceletsRaw";
 import RingsRaw from "./components/RingsRaw";
 import NecklacesRaw from "./components/NecklacesRaw";
-import ShoppingBag from "./components/ShoppingBag";
+import ShoppingBag from "./pages/ShoppingBag";
 import AllProducts from "./components/AllItems";
 import MyAccount from "./pages/MyAccount";
 import ProductDetails from "./pages/ItemDetails";

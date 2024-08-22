@@ -203,6 +203,38 @@ export const removeUserFavouriteItem = async (userId, itemId) => {
   }
 };
 
+export const fetchReviewsByItemId = async (itemId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/shoppingreviews/${itemId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return { reviews: [] };
+  }
+};
+
+export const addReview = async (reviewData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/shoppingreviews`,
+      reviewData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding review:", error);
+    throw error;
+  }
+};
+
+export const deleteReview = async (reviewId) => {
+  try {
+    await axios.delete(`${BASE_URL}/shoppingreviews/${reviewId}`);
+  } catch (error) {
+    console.error("Error deleting review:", error);
+    throw error;
+  }
+};
+
 export const handleItemButtonClick = () => {
   alert("This item is still under development!");
 };
