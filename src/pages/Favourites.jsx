@@ -18,7 +18,7 @@ function Favourites() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isAddedToBag, setIsAddedToBag] = useState({});
 
-  const quantity = 1;
+  const quantity = 0;
 
   const handleAddToBag = async (item) => {
     if (isButtonDisabled) return;
@@ -34,7 +34,7 @@ function Favourites() {
         name: item.name,
         images_url: item.images_url,
         price: item.price,
-        quantity: quantity,
+        quantity: quantity+1,
       });
     } else {
       addToBag({
@@ -43,7 +43,7 @@ function Favourites() {
         name: item.name,
         images_url: item.images_url,
         price: item.price,
-        quantity: quantity,
+        quantity: quantity+1,
       });
     }
 

@@ -80,7 +80,8 @@ const Item = ({ id }) => {
     if (user) {
       await addUserBagItem(user.user_id, item.the_item_id, quantity);
       addToBag({
-        item_id: item.the_item_id,
+        item_id: item.item_id,
+        the_item_id: item.the_item_id,
         name: item.name,
         images_url: item.images_url,
         price: item.price,
