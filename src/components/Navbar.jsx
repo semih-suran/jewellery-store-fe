@@ -34,15 +34,9 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
-
   const [showAlert, setShowAlert] = useState(false);
-
-  // const underDevelopment = () => {
-  //   setShowAlert(true);
-  // };
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);

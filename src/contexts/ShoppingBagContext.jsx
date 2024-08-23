@@ -71,7 +71,7 @@ export const ShoppingBagProvider = ({ children }) => {
     });
 
     if (user) {
-      addUserBagItem(user.user_id, item.item_id, quantity).catch((error) => {
+      addUserBagItem(user.user_id, item.the_item_id, quantity).catch((error) => {
         console.error("Failed to update bag item in the backend:", error);
       });
     } else {

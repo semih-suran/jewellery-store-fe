@@ -6,29 +6,21 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 ### [KNOWN-ISSUES]
 
-- For a Logged-In User > On Favourites Page, when adding an item to the bag, functionality is working but also throwing some BE errors
+- Currently all users can edit any other user's details
 
-- ItemDetails Page add to bag item throwing errors and adding with 0 qty
+- In shopping bag "+" and "-" buttons doesn't actually changing the quantity on the BE
 
 ### [Upcoming-Features]
 
-- My Account Page > not created yet (add/update your account details)
+- Admin Page > not created yet (add/remove/edit items, set stock quantity, Handle orders)
 
-- Reviews/Comments for each item > not available yet
+- Hot Deals Page > not created yet (discounts, best sellers)
 
-- Admin Page > not created yet (add/remove/edit items, Handle orders)
-
-## Figma Design
-
-Check out the Figma Design of the Jewellery Store: [Link will be updated!](https://jewellery-store-semih.netlify.app/)
+- New Arrivals Page > not created yet (items added in the last 3 weeks(ish))
 
 ## Live Page on Netlify
 
 Check out the live demo of the Jewellery Store: [Jewellery Store Live Page](https://jewellery-store-semih.netlify.app/)
-
-## Backend on Render
-
-Check out the Endpoints of the Jewellery Store: [Jewellery Store Endpoints](https://thenews-lhhv.onrender.com/api/)
 
 ## Tech Stack
 
