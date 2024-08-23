@@ -24,6 +24,7 @@ import { ShoppingBagProvider } from "./contexts/ShoppingBagContext";
 import { FavouritesProvider } from "./contexts/FavouritesContext";
 import SearchResults from "./components/SearchResults";
 import CheckoutPage from "./components/CheckoutPage";
+import Unauthorized from "./components/Unauthorized";
 import AnimatedPage from "./services/api";
 
 const initialOptions = {
@@ -62,6 +63,7 @@ const AppRoutes = () => {
             </AnimatedPage>
           }
         />
+        <Route path="/unauthorized" element={<Unauthorized />} />
         <Route
           path="/earrings"
           element={
