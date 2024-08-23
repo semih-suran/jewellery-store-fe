@@ -6,7 +6,7 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 ### [KNOWN-ISSUES]
 
-- Currently not auth check on  view/edit any account's details from their url
+- Currently no auth check on user account-pages. view/edit by any user is possible through relevant url
 
 - In shopping bag "+" and "-" buttons doesn't actually changing the quantity on the BE
 
