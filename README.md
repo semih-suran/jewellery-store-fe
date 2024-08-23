@@ -6,11 +6,9 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 ### [KNOWN-ISSUES]
 
-- Currently all users can edit any other user's details
+- Currently not auth check on  view/edit any account's details from their url
 
 - In shopping bag "+" and "-" buttons doesn't actually changing the quantity on the BE
-
-- ItemDetails Page & MyAccount Page doesn't load Store Logo on Navbar
 
 ### [Upcoming-Features]
 
