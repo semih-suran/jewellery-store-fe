@@ -10,6 +10,8 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 - In shopping bag "+" and "-" buttons doesn't actually changing the quantity on the BE
 
+- ItemDetails Page & MyAccount Page doesn't load Store Logo on Navbar
+
 ### [Upcoming-Features]
 
 - Admin Page > not created yet (add/remove/edit items, set stock quantity, Handle orders)
