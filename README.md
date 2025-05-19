@@ -6,7 +6,7 @@ This project is a work-in-progress e-commerce website for a jewellery store. It 
 
 ### [KNOWN-ISSUES]
 
-- Currently no auth check on user account-pages. view/edit by any user is possible through relevant url
+- Currently no auth check on user account-pages. view/edit by any user is possible through relevant url (JWT params?)
 
 - In shopping bag "+" and "-" buttons doesn't actually changing the quantity on the BE
 
